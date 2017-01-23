@@ -1,0 +1,14 @@
+C:\Code\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.exe.config
+C:\Code\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.exe
+C:\Code\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.pdb
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csprojResolveAssemblyReference.cache
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\MainWindow.g.cs
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\App.g.cs
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool_MarkupCompile.cache
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool_MarkupCompile.lref
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\MainWindow.baml
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.g.resources
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.Properties.Resources.resources
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csproj.GenerateResource.Cache
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.exe
+C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.pdb
