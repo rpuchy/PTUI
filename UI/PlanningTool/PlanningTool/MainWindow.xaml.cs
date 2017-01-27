@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Collections.ObjectModel;
+using Microsoft.Win32;
+using RequestRepresentation;
 
 namespace PlanningTool
 {
@@ -50,6 +52,33 @@ namespace PlanningTool
             public string Title { get; set; }
 
             public ObservableCollection<MenuItem> Items { get; set; }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            FileOpsImplementation fOps = new FileOpsImplementation();
+            if (openFileDialog1.ShowDialog() == true)
+            {
+                string fileName = openFileDialog1.FileName;
+                fOps.ProcessFile(fileName);
+            }
+            var test = fOps.xmlDoc;
+
         }
     }
 }

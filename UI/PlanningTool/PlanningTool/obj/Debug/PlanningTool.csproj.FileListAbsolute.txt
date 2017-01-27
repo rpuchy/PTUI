@@ -12,3 +12,17 @@ C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.Properties.Resources
 C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csproj.GenerateResource.Cache
 C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.exe
 C:\Code\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.pdb
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.exe.config
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.exe
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.pdb
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.exe
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\PlanningTool.pdb
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csprojResolveAssemblyReference.cache
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\MainWindow.g.cs
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\App.g.cs
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool_MarkupCompile.cache
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool_MarkupCompile.lref
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\MainWindow.baml
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.g.resources
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.Properties.Resources.resources
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csproj.GenerateResource.Cache

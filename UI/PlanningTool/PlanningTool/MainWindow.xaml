@@ -6,16 +6,44 @@
         xmlns:local="clr-namespace:PlanningTool"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000" Initialized="Window_Initialized">
-    <Grid Margin="0,0,0,0.5">
-        <TreeView x:Name="treeView1" HorizontalAlignment="Left" Height="437" Margin="10,25,0,0" VerticalAlignment="Top" Width="361">       
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Click="MenuItem_Click" />
+                <MenuItem Header="_Open" Click="MenuItem_Click_2" />
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
+            </MenuItem>
+        </Menu>
 
-        </TreeView>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="437" Margin="393,25,0,0" VerticalAlignment="Top" Width="554">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="300" MinHeight="400" >
+
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+
+
+
+        <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
+            <TreeView x:Name="treeView1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"  MinWidth="300" Height="Auto"   />
+        </Border>
+        <GridSplitter Width="2" ResizeBehavior="PreviousAndNext" Grid.Column="1"/>
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="1" Margin="2"/>
+
+        
+        <ListView x:Name="listView" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" MinWidth="442" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        
     </Grid>
+    </DockPanel>
 </Window>
