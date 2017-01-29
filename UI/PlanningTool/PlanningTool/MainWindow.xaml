@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlanningTool"
+        xmlns:basic="clr-namespace:TreeViewWithViewModelDemo.TextSearch"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000" Initialized="Window_Initialized">
     
@@ -21,7 +22,7 @@
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="300" MinHeight="400" >
 
         <Grid.ColumnDefinitions >
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
@@ -30,18 +31,19 @@
 
 
         <Border BorderBrush="Gray" BorderThickness="1" Margin="2">
-            <TreeView x:Name="treeView1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"  MinWidth="300" Height="Auto"   />
+                <basic:TextSearchDemoControl x:Name="TreeviewControl"  DockPanel.Dock="Left"/>
         </Border>
         <GridSplitter Width="2" ResizeBehavior="PreviousAndNext" Grid.Column="1"/>
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="1" Margin="2"/>
 
-        
-        <ListView x:Name="listView" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" MinWidth="442" >
+
+            <ListView  x:Name="listView" ItemsSource="{Binding Path=Parameters}" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" MinWidth="442" FontWeight="Bold" >
             <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="200" Header="Parameter" DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Width="200" Header="Value" DisplayMemberBinding="{Binding Path=Value}"/>
+                    </GridView>
+                </ListView.View>
         </ListView>
         
     </Grid>

@@ -1,0 +1,10 @@
+C:\test\treeviewwithviewmodeldemo\TreeViewWithViewModelDemo\BusinessLib\bin\Debug\BusinessLib.dll
+C:\test\treeviewwithviewmodeldemo\TreeViewWithViewModelDemo\BusinessLib\bin\Debug\BusinessLib.pdb
+C:\test\treeviewwithviewmodeldemo\TreeViewWithViewModelDemo\BusinessLib\obj\Debug\BusinessLib.csprojResolveAssemblyReference.cache
+C:\test\treeviewwithviewmodeldemo\TreeViewWithViewModelDemo\BusinessLib\obj\Debug\BusinessLib.dll
+C:\test\treeviewwithviewmodeldemo\TreeViewWithViewModelDemo\BusinessLib\obj\Debug\BusinessLib.pdb
+C:\Code\PTUI\UI\PlanningTool\BusinessLib\bin\Debug\BusinessLib.dll
+C:\Code\PTUI\UI\PlanningTool\BusinessLib\bin\Debug\BusinessLib.pdb
+C:\Code\PTUI\UI\PlanningTool\BusinessLib\obj\Debug\BusinessLib.csprojResolveAssemblyReference.cache
+C:\Code\PTUI\UI\PlanningTool\BusinessLib\obj\Debug\BusinessLib.dll
+C:\Code\PTUI\UI\PlanningTool\BusinessLib\obj\Debug\BusinessLib.pdb

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\
+C:\Code\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\
 PlanningTool
 none
 false
 DEBUG;TRACE
-C:\Git\PTUI\UI\PlanningTool\PlanningTool\App.xaml
-11151548125
+C:\Code\PTUI\UI\PlanningTool\PlanningTool\App.xaml
+2-1731205407
 
-14-1407520132
-14-1787462521
-MainWindow.xaml;
+172042503985
+15-1816188966
+MainWindow.xaml;TextSearch\TextSearchDemoControl.xaml;
 
 False
 

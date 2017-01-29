@@ -62,6 +62,9 @@
     <Compile Include="InputObjectConstraint.cs" />
     <Compile Include="SearchDescriptor.cs" />
     <Compile Include="SharedDefines.cs" />
+    <Compile Include="TextSearch\TextSearchDemoControl.xaml.cs" />
+    <Compile Include="TextSearch\ViewModel\TreeViewModel.cs" />
+    <Compile Include="TextSearch\ViewModel\EngineObjectViewModel.cs" />
     <Compile Include="xdmToRequestDescriptor.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -76,6 +79,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TextSearch\TextSearchDemoControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeInterfaceObject.cs" />
@@ -104,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLib\BusinessLib.csproj">
+      <Project>{10b78211-364b-46cf-b310-22457f5669d2}</Project>
+      <Name>BusinessLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
