@@ -37,8 +37,14 @@
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="1" Margin="2"/>
 
 
-            <ListView  x:Name="listView" ItemsSource="{Binding Path=Parameters}" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" MinWidth="442" FontWeight="Bold" >
-            <ListView.View>
+          <ListView  x:Name="listView" ItemsSource="{Binding Path=Parameters}" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" MinWidth="442" FontWeight="Bold" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseDoubleClick" Handler="listViewItem_MouseDoubleClick" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.View>
                     <GridView>
                         <GridViewColumn Width="200" Header="Parameter" DisplayMemberBinding="{Binding Path=Name}"/>
                         <GridViewColumn Width="200" Header="Value" DisplayMemberBinding="{Binding Path=Value}"/>

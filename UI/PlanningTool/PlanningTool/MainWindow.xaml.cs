@@ -38,7 +38,7 @@ namespace PlanningTool
         {
             InitializeComponent();
             TreeviewControl.EngineObjectViewTree.SelectedItemChanged += new RoutedPropertyChangedEventHandler<Object>(InterfaceTreeViewComputers_SelectionChange);
-           
+          
         }
 
         public ObservableCollection<Parameter> Parameters
@@ -109,5 +109,11 @@ namespace PlanningTool
                 _parameters.Add(new Parameter() { Name = param.Name, Value = param.Value });
             }
         }
-   }
+
+        private void listViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = sender as ListViewItem;
+            object obj = item.Content;
+        }
+    }
 }
