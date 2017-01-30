@@ -78,6 +78,18 @@ namespace RequestRepresentation
             return temp;
         }
 
+        private string getName(XmlNode _node)
+        {            
+            foreach (XmlNode child in _node.ChildNodes)
+            {
+                if (child.Name == "Name" )
+                {
+                    return child.InnerText;
+                }
+            }
+            return _node.Name;
+        }
+
 
         private List<EngineObject> processChildren(XmlNode _node)
         {
@@ -89,8 +101,8 @@ namespace RequestRepresentation
                 //1. children is only 1 
                 //2. child is #text
                 if (hasChildren(child))
-                { 
-                    temp.Add(new EngineObject {Name = child.Name, Children = processChildren(child), Parameters = processParameters(child) });          
+                {                     
+                    temp.Add(new EngineObject {Name = getName(child), Children = processChildren(child), Parameters = processParameters(child) });          
                 }               
             }
             return temp;

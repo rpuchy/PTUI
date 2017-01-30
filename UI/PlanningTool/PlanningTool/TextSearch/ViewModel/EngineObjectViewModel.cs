@@ -18,6 +18,7 @@ namespace TreeViewWithViewModelDemo.TextSearch
         readonly EngineObjectViewModel _parent;
         private readonly IList<Parameter> _parameters; 
         readonly EngineObject _engineObject;
+        private readonly String _fullyqualifiedname;
 
         bool _isExpanded;
         bool _isSelected;
@@ -36,7 +37,15 @@ namespace TreeViewWithViewModelDemo.TextSearch
             _engineObject = engineObject;
             _parent = parent;
             _parameters = engineObject.Parameters;
-
+            if (parent == null)
+            {
+                _fullyqualifiedname = _engineObject.Name;
+            }
+            else
+            {
+                _fullyqualifiedname = parent.Fullyqualifiedname + '.' + _engineObject.Name;
+            }
+            
             _children = new ReadOnlyCollection<EngineObjectViewModel>(
                     (from child in _engineObject.Children
                      select new EngineObjectViewModel(child, this))
@@ -55,6 +64,11 @@ namespace TreeViewWithViewModelDemo.TextSearch
         public string Name
         {
             get { return _engineObject.Name; }
+        }
+
+        public string Fullyqualifiedname
+        {
+            get { return _fullyqualifiedname; }
         }
 
         public IList<Parameter> Parameters

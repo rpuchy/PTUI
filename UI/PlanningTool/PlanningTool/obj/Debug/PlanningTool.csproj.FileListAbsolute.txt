@@ -45,3 +45,8 @@ C:\Code\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\BusinessLib.pdb
 C:\Code\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\TextSearch\TextSearchDemoControl.baml
 C:\Code\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\TextSearch\TextSearchDemoControl.g.cs
 C:\Code\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\BusinessLib.dll
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\bin\Debug\BusinessLib.pdb
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\TextSearch\TextSearchDemoControl.baml
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\TextSearch\TextSearchDemoControl.g.cs
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -33,9 +33,7 @@ namespace TreeViewWithViewModelDemo.TextSearch
             _tree = new TreeViewModel(rootObject);
 
             // Let the UI bind to the view-model.
-            base.DataContext = _tree;
-
-            
+            base.DataContext = _tree;            
         }
 
         public void SetData(TreeViewModel data)
@@ -46,7 +44,7 @@ namespace TreeViewWithViewModelDemo.TextSearch
         void searchTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                _tree.SearchCommand.Execute(null);
+                ((TreeViewModel)base.DataContext).SearchCommand.Execute(null);
         }
     }
 }
