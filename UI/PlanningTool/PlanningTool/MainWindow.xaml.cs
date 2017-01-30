@@ -108,6 +108,7 @@ namespace PlanningTool
             {
                 _parameters.Add(new Parameter() { Name = param.Name, Value = param.Value });
             }
+            AddressBox.Text = ((EngineObjectViewModel) e.NewValue).Fullyqualifiedname;
         }
 
         private void listViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)

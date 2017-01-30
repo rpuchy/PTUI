@@ -34,16 +34,22 @@
 
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_New" Click="MenuItem_Click" />
-                <MenuItem Header="_Open" Click="MenuItem_Click_2" />
-                <MenuItem Header="_Save" />
-                <Separator />
-                <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
-            </MenuItem>
-        </Menu>
-
+        <DockPanel DockPanel.Dock="Top">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" Click="MenuItem_Click" />
+                    <MenuItem Header="_Open" Click="MenuItem_Click_2" />
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
+                </MenuItem>
+            </Menu>
+            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                <TextBlock DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left">Address :</TextBlock>
+                <Button DockPanel.Dock="Right"  HorizontalAlignment="Right" HorizontalContentAlignment="Right">Go to ></Button>
+                <TextBox x:Name="AddressBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"  MinWidth="200" MaxLines="1" TextWrapping="Wrap">Simulation address goes here</TextBox>
+            </DockPanel>
+        </DockPanel>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="300" MinHeight="400" >
 
         <Grid.ColumnDefinitions >
