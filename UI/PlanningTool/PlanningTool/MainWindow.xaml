@@ -7,7 +7,32 @@
         xmlns:basic="clr-namespace:TreeViewWithViewModelDemo.TextSearch"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000" Initialized="Window_Initialized">
-    
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="boolToVis" />
+
+        <Style TargetType="{x:Type TextBlock}" 
+           x:Key="GridBlockStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility" 
+              Value="{Binding Path=IsSelected, 
+              RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type ListViewItem}},
+              Converter={StaticResource boolToVis}, 
+                         ConverterParameter=False}" />
+        </Style>
+
+        <Style TargetType="{x:Type FrameworkElement}" 
+           x:Key="GridEditStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility" 
+              Value="{Binding Path=IsSelected, 
+              RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type ListViewItem}},
+              Converter={StaticResource boolToVis}, 
+                         ConverterParameter=True}" />
+        </Style>
+
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -46,8 +71,30 @@
 
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="200" Header="Parameter" DisplayMemberBinding="{Binding Path=Name}"/>
-                        <GridViewColumn Width="200" Header="Value" DisplayMemberBinding="{Binding Path=Value}"/>
+                        <GridViewColumn Width="200" Header="Parameter">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=Name}" 
+                                 Style="{StaticResource GridBlockStyle}"/>
+                                        <TextBox Text="{Binding Path=Name}" 
+                               Style="{StaticResource GridEditStyle}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="200" Header="Value">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=Value}" 
+                                 Style="{StaticResource GridBlockStyle}"/>
+                                        <TextBox Text="{Binding Path=Value}" 
+                               Style="{StaticResource GridEditStyle}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
         </ListView>

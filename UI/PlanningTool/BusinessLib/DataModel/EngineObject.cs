@@ -1,6 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Windows.Media;
+using System.Windows.Documents;
+using System.Windows.Data;
 
 namespace BusinessLib
 {
@@ -37,32 +46,31 @@ namespace BusinessLib
         }
     }
 
-    public class Parameter:INotifyPropertyChanged
+    public class Parameter: DependencyObject, INotifyPropertyChanged
     {
         public Parameter()
         {
             
         }
-        private string _name;
-        private string _value;
+
+        public static readonly DependencyProperty _name =
+        DependencyProperty.Register("Name", typeof(string),
+        typeof(Parameter), new UIPropertyMetadata(null));
 
         public string Name
         {
-            get { return _name; }
-            set
-            {
-                _name = value;
-            }
+            get { return (string)GetValue(_name); }
+            set { SetValue(_name, value); }
         }
+
+        public static readonly DependencyProperty _value =
+        DependencyProperty.Register("Value", typeof(string),
+        typeof(Parameter), new UIPropertyMetadata(null));
 
         public string Value
         {
-            get { return _value; }
-            set
-            {
-                _value = value;
-                NotifyPropertyChanged("Value");
-            }
+            get { return (string)GetValue(_value); }
+            set { SetValue(_value, value); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
