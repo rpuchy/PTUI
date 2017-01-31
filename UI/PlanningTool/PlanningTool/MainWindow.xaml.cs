@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data;
 using BusinessLib;
 using Microsoft.Win32;
@@ -38,8 +39,9 @@ namespace PlanningTool
         {
             InitializeComponent();
             TreeviewControl.EngineObjectViewTree.SelectedItemChanged += new RoutedPropertyChangedEventHandler<Object>(InterfaceTreeViewComputers_SelectionChange);
-          
+
         }
+
 
         public ObservableCollection<Parameter> Parameters
         {
@@ -101,13 +103,29 @@ namespace PlanningTool
             
 
         }
+
         void InterfaceTreeViewComputers_SelectionChange(Object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            _parameters.Clear();
+            //first write back the parameters then move to the next
+            if (e.OldValue != null)
+            {
+                ((EngineObjectViewModel) e.OldValue).Parameters.Clear();
+
+                foreach (var param in _parameters)
+                {
+                    ((EngineObjectViewModel) e.OldValue).Parameters.Add(new Parameter()
+                    {
+                        Name = param.Name,
+                        Value = param.Value
+                    });
+                }
+            }
+            _parameters.Clear();            
             foreach (var param in ((EngineObjectViewModel)e.NewValue).Parameters)
             {
                 _parameters.Add(new Parameter() { Name = param.Name, Value = param.Value });
             }
+            
             AddressBox.Text = ((EngineObjectViewModel) e.NewValue).Fullyqualifiedname;
         }
 
