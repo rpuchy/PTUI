@@ -39,8 +39,8 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="MenuItem_Click" />
                     <MenuItem Header="_Open" Click="MenuItem_Click_2" />
-                    <MenuItem Header="_Save" />
-                    <MenuItem Header="Save _As"></MenuItem>
+                    <MenuItem Header="_Save" Click="MenuItem_Click_3" />
+                    <MenuItem Header="Save _As" Click="MenuItem_Click_4" ></MenuItem>
                     <Separator />
                     <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
                 </MenuItem>

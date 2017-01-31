@@ -39,7 +39,7 @@ namespace PlanningTool
         {
             InitializeComponent();
             TreeviewControl.EngineObjectViewTree.SelectedItemChanged += new RoutedPropertyChangedEventHandler<Object>(InterfaceTreeViewComputers_SelectionChange);
-
+            
         }
 
 
@@ -133,6 +133,46 @@ namespace PlanningTool
         {
             ListViewItem item = sender as ListViewItem;
             object obj = item.Content;
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Document"; // Default file name
+            dlg.DefaultExt = ".xml"; // Default file extension
+            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                fOps = new FileOpsImplementation();
+                fOps.Save(filename, Data.FirstGeneration[0]);
+            }
+        }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Document"; // Default file name
+            dlg.DefaultExt = ".xml"; // Default file extension
+            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                fOps = new FileOpsImplementation();
+                fOps.Save(filename, Data.FirstGeneration[0]);
+            }
         }
     }
 
