@@ -1,0 +1,2691 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<body>
+  <Simulation>
+    <Params>
+      <TimeStepSizes>
+        <TimestepSize />
+      </TimeStepSizes>
+      <OtherCalendars>
+        <Calendar />
+      </OtherCalendars>
+      <Rounding>
+        <Round />
+        <Round />
+        <Round />
+      </Rounding>
+    </Params>
+    <Inputs>
+      <EconomicScenarioGenerator>
+        <BaseCurrency />
+        <Currencies>
+          <ESGCurrencies>
+            <Models>
+              <Model>
+                <ModelParameters>
+                  <InputCurve>
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                    <ZeroPrice />
+                  </InputCurve>
+                </ModelParameters>
+              </Model>
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+              <Model />
+            </Models>
+            <Currency />
+          </ESGCurrencies>
+        </Currencies>
+        <Correlations>
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+          <Correlation />
+        </Correlations>
+      </EconomicScenarioGenerator>
+      <Tables>
+        <SimTable>
+          <IncomeTaxSchedule>
+            <Bracket />
+            <Bracket />
+            <Bracket />
+            <Bracket />
+            <Bracket />
+          </IncomeTaxSchedule>
+          <PreservationAgeSchedule>
+            <PreservationAgeThreshold />
+            <PreservationAgeThreshold />
+            <PreservationAgeThreshold />
+            <PreservationAgeThreshold />
+            <PreservationAgeThreshold />
+            <PreservationAgeThreshold />
+          </PreservationAgeSchedule>
+        </SimTable>
+        <SimTable>
+          <Definition>
+            <TaxDetails />
+          </Definition>
+        </SimTable>
+        <SimTable>
+          <Definition>
+            <TaxDetails />
+          </Definition>
+        </SimTable>
+        <SimTable>
+          <Definition>
+            <TaxDetails />
+          </Definition>
+        </SimTable>
+        <SimTable>
+          <sis_min_table>
+            <SisMin />
+            <SisMin />
+            <SisMin />
+            <SisMin />
+            <SisMin />
+            <SisMin />
+            <SisMin />
+            <SisMin />
+          </sis_min_table>
+        </SimTable>
+        <SimTable />
+        <SimTable>
+          <ContributionScheduleTable>
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+            <ContributionSchedule />
+          </ContributionScheduleTable>
+        </SimTable>
+        <SimTable>
+          <Definition />
+        </SimTable>
+        <SimTable>
+          <AgePension>
+            <Single />
+            <Couple />
+            <EligibleAges>
+              <EligibleAge />
+              <EligibleAge />
+              <EligibleAge />
+              <EligibleAge />
+              <EligibleAge />
+              <EligibleAge />
+            </EligibleAges>
+          </AgePension>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+        <SimTable>
+          <Schedule>
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+            <TermRate />
+          </Schedule>
+        </SimTable>
+      </Tables>
+      <Portfolios>
+        <Portfolio>
+          <TaxWrappers>
+            <TaxWrapper>
+              <Params />
+              <Products>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params>
+                    <ResetDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params>
+                    <ResetDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <DynamicAssetAllocation />
+                    <DynamicAssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+              </Products>
+            </TaxWrapper>
+            <TaxWrapper>
+              <Params />
+              <Products>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <DynamicAssetAllocation />
+                    <DynamicAssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+              </Products>
+            </TaxWrapper>
+            <TaxWrapper>
+              <Params />
+              <Products>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <DynamicAssetAllocation />
+                    <DynamicAssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+              </Products>
+            </TaxWrapper>
+            <TaxWrapper>
+              <Params />
+              <Products>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <DynamicAssetAllocation />
+                    <DynamicAssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails>
+                      <IncomeProtectionDetails />
+                    </ProductDetails>
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                  <Assets>
+                    <AssetAllocation />
+                  </Assets>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params>
+                    <ProductDetails />
+                  </Params>
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+                <Product>
+                  <Params />
+                </Product>
+              </Products>
+            </TaxWrapper>
+          </TaxWrappers>
+          <RebalanceRules>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <TaxWrapperTaxationTypes>
+                <TaxWrapperTaxationType />
+              </TaxWrapperTaxationTypes>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <TaxWrapperTaxationTypes>
+                <TaxWrapperTaxationType />
+              </TaxWrapperTaxationTypes>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromTaxWrappers>
+                <FromTaxWrapper />
+                <FromTaxWrapper />
+                <FromTaxWrapper />
+              </FromTaxWrappers>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <WeightAllocation />
+              </FromProducts>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <WeightAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <NeedInputs>
+                <Debts>
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                </Debts>
+                <CashOutFlows>
+                  <CashOutFlow />
+                </CashOutFlows>
+                <SpecificNeed />
+              </NeedInputs>
+              <CurrentInsurance>
+                <InsuranceHeld />
+              </CurrentInsurance>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <NeedInputs>
+                <Debts>
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                </Debts>
+                <CashOutFlows>
+                  <CashOutFlow />
+                </CashOutFlows>
+                <SpecificNeed />
+              </NeedInputs>
+              <CurrentInsurance>
+                <InsuranceHeld />
+                <InsuranceHeld />
+              </CurrentInsurance>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <NeedInputs>
+                <Debts>
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                  <Debt />
+                </Debts>
+                <CashOutFlows>
+                  <CashOutFlow />
+                </CashOutFlows>
+                <SpecificNeed />
+              </NeedInputs>
+              <CurrentInsurance>
+                <InsuranceHeld />
+                <InsuranceHeld />
+              </CurrentInsurance>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <ProductAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+                <ProductAllocation />
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+            <RebalanceRule>
+              <FromProducts>
+                <PriorityAllocation />
+              </FromProducts>
+              <ToProducts>
+                <ProductAllocation />
+              </ToProducts>
+            </RebalanceRule>
+          </RebalanceRules>
+        </Portfolio>
+      </Portfolios>
+      <Client>
+        <People>
+          <Person>
+            <Holdings>
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+              <Holding />
+            </Holdings>
+          </Person>
+          <Person>
+            <Holdings>
+              <Holding />
+              <Holding />
+            </Holdings>
+          </Person>
+        </People>
+      </Client>
+    </Inputs>
+    <OutputRequirements>
+      <Queries>
+        <Query>
+          <Filter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+          </Filter>
+          <Values>
+            <ValueTypes />
+          </Values>
+        </Query>
+        <Query>
+          <Filter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+          </Filter>
+          <Values>
+            <ValueTypes />
+          </Values>
+        </Query>
+        <Query>
+          <Filter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+            <QueryFilter>
+              <Where>
+                <QueryFilterCriteria />
+              </Where>
+            </QueryFilter>
+          </Filter>
+          <Values>
+            <ValueTypes />
+          </Values>
+        </Query>
+      </Queries>
+      <Operators>
+        <Operator>
+          <Operation>
+            <ApplyTo>
+              <OperationApplyTo />
+            </ApplyTo>
+          </Operation>
+        </Operator>
+        <Operator>
+          <Operation>
+            <ApplyTo>
+              <OperationApplyTo />
+            </ApplyTo>
+          </Operation>
+        </Operator>
+        <Operator>
+          <Operation>
+            <ApplyTo>
+              <OperationApplyTo />
+            </ApplyTo>
+          </Operation>
+        </Operator>
+      </Operators>
+    </OutputRequirements>
+  </Simulation>
+</body>

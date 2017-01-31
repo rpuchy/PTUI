@@ -35,6 +35,8 @@ namespace BusinessLib
 
         public string Name { get; set; }
 
+        public string NodeName { get; set; }
+
         public void AddEngineObjectChild(EngineObject child)
         {
             _children.Add(child);
@@ -72,6 +74,8 @@ namespace BusinessLib
             get { return (string)GetValue(_value); }
             set { SetValue(_value, value); }
         }
+
+       
 
         public event PropertyChangedEventHandler PropertyChanged;
 

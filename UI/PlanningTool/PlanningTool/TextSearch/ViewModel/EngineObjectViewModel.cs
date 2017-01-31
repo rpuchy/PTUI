@@ -20,6 +20,8 @@ namespace TreeViewWithViewModelDemo.TextSearch
         readonly EngineObject _engineObject;
         private readonly String _fullyqualifiedname;
 
+        private string _nodeName;
+
         bool _isExpanded;
         bool _isSelected;
 
@@ -74,6 +76,12 @@ namespace TreeViewWithViewModelDemo.TextSearch
         public IList<Parameter> Parameters
         {
             get { return _parameters; }
+        }
+
+        public string NodeName
+        {
+            get { return _engineObject.NodeName; }
+            
         }
 
         #endregion // EngineObject Properties

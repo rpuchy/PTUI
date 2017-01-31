@@ -9,6 +9,7 @@ using System.Diagnostics.PerformanceData;
 using System.Windows;
 using System.Xml;
 using BusinessLib;
+using TreeViewWithViewModelDemo.TextSearch;
 
 namespace RequestRepresentation
 {
@@ -37,6 +38,39 @@ namespace RequestRepresentation
                                                     Environment.NewLine );
                 throw;
             }
+        }
+
+        public bool Save(string path, EngineObjectViewModel rootnode)
+        {
+            XmlDocument doc = new XmlDocument();
+
+            //(1) the xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlElement root = doc.DocumentElement;
+            doc.InsertBefore(xmlDeclaration, root);
+
+            doc.AppendChild(processModel(doc, rootnode.Children[0]));
+            
+            doc.Save(path);
+            return true;
+
+        }
+
+        private XmlElement processModel(XmlDocument doc, EngineObjectViewModel node)
+        {
+            XmlElement element = doc.CreateElement(string.Empty, node.NodeName, string.Empty);
+            foreach (var child in node.Children)
+            {
+                var newelement = processModel(doc, child);
+                element.AppendChild(newelement);
+            }
+            foreach (var param in node.Parameters)
+            {
+                var newparam = doc.CreateElement(string.Empty, param.Name, string.Empty);
+                newparam.AppendChild(doc.CreateTextNode(param.Value));
+                element.AppendChild(newparam);
+            }
+            return element;
         }
 
         private void buildTree()
@@ -102,7 +136,7 @@ namespace RequestRepresentation
                 //2. child is #text
                 if (hasChildren(child))
                 {                     
-                    temp.Add(new EngineObject {Name = getName(child), Children = processChildren(child), Parameters = processParameters(child) });          
+                    temp.Add(new EngineObject {Name = getName(child), NodeName= child.Name,  Children = processChildren(child), Parameters = processParameters(child) });          
                 }               
             }
             return temp;
