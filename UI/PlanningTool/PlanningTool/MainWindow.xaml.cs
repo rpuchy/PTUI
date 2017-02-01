@@ -120,12 +120,36 @@ namespace PlanningTool
                     });
                 }
             }
-            _parameters.Clear();            
-            foreach (var param in ((EngineObjectViewModel)e.NewValue).Parameters)
+            _parameters.Clear();
+            //We need to check if this is a table i.e. all the children have the same name 
+            //TODO : move this to a property of the model
+            bool table = false;
+            if (((EngineObjectViewModel) e.NewValue).Children.Count > 1)
             {
-                _parameters.Add(new Parameter() { Name = param.Name, Value = param.Value });
+                table = true;
+                string name = ((EngineObjectViewModel)e.NewValue).Children[0].Name;
+                foreach (var child in ((EngineObjectViewModel)e.NewValue).Children)
+                {
+                    if (name != child.Name) table = false;
+                }
             }
-            
+
+            if (table)
+            {
+                //if it's a table we change the parameter names and show more/fewer columns
+                foreach (var child in ((EngineObjectViewModel) e.NewValue).Children)
+                {
+                    _parameters.Add(new Parameter() {Name=child.Parameters[0].Value, Value = child.Parameters[1].Value});
+                }
+            }
+            else
+            {
+                foreach (var param in ((EngineObjectViewModel) e.NewValue).Parameters)
+                {
+                    _parameters.Add(new Parameter() {Name = param.Name, Value = param.Value});
+                }
+            }
+
             AddressBox.Text = ((EngineObjectViewModel) e.NewValue).Fullyqualifiedname;
         }
 
