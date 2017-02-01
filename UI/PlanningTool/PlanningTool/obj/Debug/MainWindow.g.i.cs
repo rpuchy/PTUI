@@ -42,7 +42,7 @@ namespace PlanningTool {
     public partial class MainWindow : System.Windows.Window, System.Windows.Markup.IComponentConnector, System.Windows.Markup.IStyleConnector {
         
         
-        #line 51 "..\..\MainWindow.xaml"
+        #line 50 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBox AddressBox;
         
@@ -50,7 +50,7 @@ namespace PlanningTool {
         #line hidden
         
         
-        #line 66 "..\..\MainWindow.xaml"
+        #line 65 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal TreeViewWithViewModelDemo.TextSearch.TextSearchDemoControl TreeviewControl;
         
@@ -58,7 +58,7 @@ namespace PlanningTool {
         #line hidden
         
         
-        #line 72 "..\..\MainWindow.xaml"
+        #line 71 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.ListView listView;
         
@@ -136,27 +136,19 @@ namespace PlanningTool {
             return;
             case 5:
             
-            #line 43 "..\..\MainWindow.xaml"
-            ((System.Windows.Controls.MenuItem)(target)).Click += new System.Windows.RoutedEventHandler(this.MenuItem_Click_4);
-            
-            #line default
-            #line hidden
-            return;
-            case 6:
-            
-            #line 45 "..\..\MainWindow.xaml"
+            #line 44 "..\..\MainWindow.xaml"
             ((System.Windows.Controls.MenuItem)(target)).Click += new System.Windows.RoutedEventHandler(this.MenuItem_Click_1);
             
             #line default
             #line hidden
             return;
-            case 7:
+            case 6:
             this.AddressBox = ((System.Windows.Controls.TextBox)(target));
             return;
-            case 8:
+            case 7:
             this.TreeviewControl = ((TreeViewWithViewModelDemo.TextSearch.TextSearchDemoControl)(target));
             return;
-            case 9:
+            case 8:
             this.listView = ((System.Windows.Controls.ListView)(target));
             return;
             }
@@ -173,11 +165,11 @@ namespace PlanningTool {
             System.Windows.EventSetter eventSetter;
             switch (connectionId)
             {
-            case 10:
+            case 9:
             eventSetter = new System.Windows.EventSetter();
             eventSetter.Event = System.Windows.Controls.Control.MouseDoubleClickEvent;
             
-            #line 75 "..\..\MainWindow.xaml"
+            #line 74 "..\..\MainWindow.xaml"
             eventSetter.Handler = new System.Windows.Input.MouseButtonEventHandler(this.listViewItem_MouseDoubleClick);
             
             #line default

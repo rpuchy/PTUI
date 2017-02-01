@@ -143,7 +143,166 @@ namespace RequestRepresentation
             return temp;
         }
 
+        //returns the ouput component
+        public EngineObject AddAlloutputs(EngineObject node)
+        {
 
+
+            //We follow the following process
+            //1. we cycle through the ESG models and pick out all the models 
+            //2. we cycle through the products and pick out the products
+            foreach (var child in node.Children)
+            {
+                     
+            }
+
+        }
+
+
+
+        private List<string> AddProducts(EngineObject node, string prev_taxwrapper)
+        {
+            var temp = new List<string>();
+            string taxWrapper = "";
+            if (node.NodeName == "TaxWrapper")
+            {
+                taxWrapper = node.Name;
+            }
+            else
+            {
+                taxWrapper = prev_taxwrapper;
+            }
+            foreach (var child in node.Children)
+            {
+             
+                temp = AddProducts(child,taxWrapper);
+            }
+            var outlist = new List<string>();
+            foreach (var product in temp)
+            {
+                outlist.Add(product);
+            }
+            if (node.NodeName == "Product")
+            {
+                outlist.Add(taxWrapper+","+node.Name+","+getProductType(node.Parameters ));
+            }
+            return outlist;
+        }
+
+        private string getProductType(IList<Parameter> Parameters)
+        {
+            foreach (var param in Parameters)
+            {
+                if (param.Name == "Type")
+                {
+                    return param.Value;
+                }
+
+            }
+            return null;
+        }
+
+
+        private EngineObject newQueryFilter(string Field, string Value, string ObjectName)
+        {
+
+            EngineObject QueryFilterCriter1 = new EngineObject() { Name = "QueryFilterCriteria", NodeName = "QueryFilterCriteria", Parameters = new List<Parameter>() };
+            QueryFilterCriter1.Parameters.Add(new Parameter() { Name = "Field", Value = "" });
+            QueryFilterCriter1.Parameters.Add(new Parameter() { Name = "Value", Value = "" });
+            EngineObject Where = new EngineObject() { Name = "Where", NodeName = "Where", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Where.Children.Add(QueryFilterCriter1);
+            EngineObject QueryFilter = new EngineObject() { Name = "QueryFilter", NodeName = "QueryFilter", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            QueryFilter.Children.Add(Where);
+            QueryFilter.Parameters.Add(new Parameter() { Name = "ObjectName", Value = "" });
+
+            return QueryFilter;
+        }
+
+
+
+        private EngineObject Value(string Valuetype)
+        {
+
+            EngineObject ValueTypes = new EngineObject() { Name = "ValueTypes", NodeName = "ValueTypes", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            ValueTypes.Parameters.Add(new Parameter() { Name = "ValueType", Value = Valuetype });
+
+            EngineObject Values = new EngineObject() { Name = "Values", NodeName = "Values", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Values.Children.Add(ValueTypes);
+
+            return Values;
+        }
+
+        private EngineObject newQuery(string QueryID, string productName, string taxWrapper, string ValueType)
+        {
+            EngineObject QueryFilter1 = newQueryFilter("Name", productName, "product");
+            EngineObject QueryFilter2 = newQueryFilter("Name", taxWrapper, "tax_wrapper");
+
+            EngineObject Filter = new EngineObject() { Name = "Filter", NodeName = "Filter", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Filter.Children.Add(QueryFilter1);
+            Filter.Children.Add(QueryFilter2);
+
+            EngineObject Query = new EngineObject() { Name = "Query", NodeName = "Query", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Query.Parameters.Add(new Parameter() { Name = "QueryID", Value = QueryID });
+            Query.Parameters.Add(new Parameter() { Name = "Type", Value = ValueType });
+            Query.Children.Add(Value(ValueType));
+
+            Query.Children.Add(Filter);
+            return Query;
+        }
+
+
+
+        private EngineObject newOperator(string operatorID, string queryID, string valuetype, string timestepstart, string timestepend)
+        {
+            EngineObject OperationApplyTo = new EngineObject() {Name= "OperationApplyTo", NodeName = "OperationApplyTo", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            OperationApplyTo.Parameters.Add(new Parameter() {Name= "QueryID", Value=queryID});
+            OperationApplyTo.Parameters.Add(new Parameter() { Name = "Value", Value = valuetype });
+            OperationApplyTo.Parameters.Add(new Parameter() { Name = "TimeStepStart", Value = timestepstart });
+            OperationApplyTo.Parameters.Add(new Parameter() { Name = "TimeStepEnd", Value = timestepend });
+
+            EngineObject ApplyTo = new EngineObject() {Name="ApplyTo",NodeName = "ApplyTo", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            ApplyTo.Children.Add(OperationApplyTo);
+
+            EngineObject Operation = new EngineObject() { Name = "Operation", NodeName = "Operation", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Operation.Children.Add(ApplyTo);
+            Operation.Parameters.Add(new Parameter() {Name="Name",Value= "Scenarios" });
+            Operation.Parameters.Add(new Parameter() { Name = "Type", Value = "SCENARIOALL" });
+
+            EngineObject Operator = new EngineObject() { Name = "Operator", NodeName = "Operator", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            Operator.Children.Add(Operation);
+            Operator.Parameters.Add(new Parameter() {Name= "OperatorID", Value=operatorID});
+
+            return Operator;
+        }
+
+
+        public EngineObject Addoutput(string productName, string valueType, string taxWrapper, string timestepstart, string timestepend, EngineObject node)
+        {
+
+            EngineObject QueryPart = newQuery("Query_" + productName + "_" + valueType, productName, taxWrapper,valueType);
+            EngineObject OperatorPart = newOperator(productName + "_" + valueType,
+                "Query_" + productName + "_" + valueType, valueType, timestepstart, timestepend);
+
+            foreach (var child in node.Children)
+            {
+                if (child.Name == "OutputRequirements")
+                {
+                    foreach (var child2 in child.Children)
+                    {
+                        if (child2.Name == "Queries")
+                        {
+                            child2.Children.Add(QueryPart);
+                        }
+                        if (child2.Name == "Operators")
+                        {
+                            child2.Children.Add(OperatorPart);
+                        }
+                    }
+                }
+            }
+            return node;
+
+        }
 
 
         public EngineObject EngineObjectTree
