@@ -151,16 +151,14 @@ namespace RequestRepresentation
             //We follow the following process
             //1. we cycle through the ESG models and pick out all the models 
             //2. we cycle through the products and pick out the products
-            foreach (var child in node.Children)
-            {
-                     
-            }
+
+            var productlist = GetProducts(node, "");
 
         }
 
 
 
-        private List<string> AddProducts(EngineObject node, string prev_taxwrapper)
+        private List<string> GetProducts(EngineObject node, string prev_taxwrapper)
         {
             var temp = new List<string>();
             string taxWrapper = "";
