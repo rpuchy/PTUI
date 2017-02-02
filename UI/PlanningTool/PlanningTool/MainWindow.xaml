@@ -44,6 +44,11 @@
                     <Separator />
                     <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
                 </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Add all outputs" Click="MenuItem_Click_5" />
+                </MenuItem>
+
+
             </Menu>
             <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                 <TextBlock DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left">Address :</TextBlock>

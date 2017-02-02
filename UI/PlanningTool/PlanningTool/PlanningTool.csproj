@@ -60,6 +60,8 @@
     <Compile Include="ConfigLoader.cs" />
     <Compile Include="FileOpsImplementation.cs" />
     <Compile Include="InputObjectConstraint.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="SearchDescriptor.cs" />
     <Compile Include="SharedDefines.cs" />
     <Compile Include="TextSearch\TextSearchDemoControl.xaml.cs" />

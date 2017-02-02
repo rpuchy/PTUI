@@ -30,7 +30,8 @@ namespace PlanningTool
     {
 
         private FileOpsImplementation fOps = new FileOpsImplementation();
-        private TreeViewModel Data;
+        private TreeViewModel VisualData;
+        private EngineObject Data;
 
 
         readonly ObservableCollection<Parameter> _parameters = new ObservableCollection<Parameter>();
@@ -89,14 +90,14 @@ namespace PlanningTool
             openFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 1;
             openFileDialog1.RestoreDirectory = true;
-            fOps = new FileOpsImplementation();
             if (openFileDialog1.ShowDialog() == true)
             {
                 string fileName = openFileDialog1.FileName;
                 fOps.ProcessFile(fileName);
             }
-            Data = new TreeViewModel(fOps.EngineObjectTree);
-            TreeviewControl.SetData(Data);
+            Data = fOps.EngineObjectTree;
+            VisualData = new TreeViewModel(Data);
+            TreeviewControl.SetData(VisualData);
             
             base.DataContext = TreeviewControl;
             listView.DataContext = this;
@@ -174,8 +175,7 @@ namespace PlanningTool
             {
                 // Save document
                 string filename = dlg.FileName;
-                fOps = new FileOpsImplementation();
-                fOps.Save(filename, Data.FirstGeneration[0]);
+                fOps.Save(filename, VisualData.FirstGeneration[0]);
             }
         }
 
@@ -194,9 +194,35 @@ namespace PlanningTool
             {
                 // Save document
                 string filename = dlg.FileName;
-                fOps = new FileOpsImplementation();
-                fOps.Save(filename, Data.FirstGeneration[0]);
+                fOps.Save(filename, VisualData.FirstGeneration[0]);
             }
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            //TODO : check a file is open
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Document"; // Default file name
+            dlg.DefaultExt = ".xml"; // Default file extension
+            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                
+                fOps.AddAlloutputs();
+                fOps.SaveAs(filename);
+            }
+            
+            
+            
+            
+
         }
     }
 

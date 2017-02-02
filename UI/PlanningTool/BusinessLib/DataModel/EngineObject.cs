@@ -48,11 +48,26 @@ namespace BusinessLib
         }
     }
 
-    public class Parameter: DependencyObject, INotifyPropertyChanged
+    public class Parameter: DependencyObject, INotifyPropertyChanged, IEquatable<Parameter>
     {
         public Parameter()
         {
             
+        }
+
+
+        public bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Parameter objAsPart = obj as Parameter;
+            if (objAsPart == null) return false;
+            else return Equals(objAsPart);
+        }
+
+        public bool Equals(Parameter other)
+        {
+            if (other == null) return false;
+            return (this.Name.Equals(other.Name)&&this.Value.Equals(other.Value));
         }
 
         public static readonly DependencyProperty _name =
