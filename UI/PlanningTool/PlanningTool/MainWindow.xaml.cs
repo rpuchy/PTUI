@@ -29,7 +29,7 @@ namespace PlanningTool
     public partial class MainWindow : Window
     {
 
-        private FileOpsImplementation fOps = new FileOpsImplementation();
+        private FileOpsImplementation fOps;
         private TreeViewModel VisualData;
         private EngineObject Data;
 
@@ -40,7 +40,7 @@ namespace PlanningTool
         {
             InitializeComponent();
             TreeviewControl.EngineObjectViewTree.SelectedItemChanged += new RoutedPropertyChangedEventHandler<Object>(InterfaceTreeViewComputers_SelectionChange);
-            
+            base.DataContext = this;
         }
 
 
@@ -93,16 +93,14 @@ namespace PlanningTool
             if (openFileDialog1.ShowDialog() == true)
             {
                 string fileName = openFileDialog1.FileName;
-                fOps.ProcessFile(fileName);
+                fOps = new FileOpsImplementation(fileName);
             }
             Data = fOps.EngineObjectTree;
             VisualData = new TreeViewModel(Data);
             TreeviewControl.SetData(VisualData);
             
             base.DataContext = TreeviewControl;
-            listView.DataContext = this;
-            
-
+            listView.DataContext = this;            
         }
 
         void InterfaceTreeViewComputers_SelectionChange(Object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -154,6 +152,11 @@ namespace PlanningTool
             AddressBox.Text = ((EngineObjectViewModel) e.NewValue).Fullyqualifiedname;
         }
 
+        private bool fileisopen()
+        {
+            return fOps!=null ;
+        }
+
         private void listViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListViewItem item = sender as ListViewItem;
@@ -162,67 +165,41 @@ namespace PlanningTool
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xml"; // Default file extension
-            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
-
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
-            {
-                // Save document
-                string filename = dlg.FileName;
-                fOps.Save(filename, VisualData.FirstGeneration[0]);
-            }
+            fOps.UpdateModel(VisualData.FirstGeneration[0]);
+            fOps?.Save();
         }
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xml"; // Default file extension
-            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
-
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
+            if (fOps != null)
             {
-                // Save document
-                string filename = dlg.FileName;
-                fOps.Save(filename, VisualData.FirstGeneration[0]);
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Document"; // Default file name
+                dlg.DefaultExt = ".xml"; // Default file extension
+                dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
+
+                // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string filename = dlg.FileName;
+                    //write the viewModel back to the main object then save
+                    fOps.UpdateModel(VisualData.FirstGeneration[0]);
+                    fOps.Save();
+                }
             }
         }
 
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
         {
-            //TODO : check a file is open
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".xml"; // Default file extension
-            dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
-
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
+            if (fOps != null)
             {
-                // Save document
-                string filename = dlg.FileName;
-                
-                fOps.AddAlloutputs();
-                fOps.SaveAs(filename);
+                fOps.AddAlloutputs(0, 100);
+                VisualData = new TreeViewModel(fOps.EngineObjectTree);
             }
-            
-            
-            
-            
-
         }
     }
 

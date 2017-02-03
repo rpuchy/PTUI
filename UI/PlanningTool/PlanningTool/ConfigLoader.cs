@@ -20,7 +20,7 @@ namespace RequestRepresentation
         {
             System.Diagnostics.Debug.WriteLine( "Loading config..." + 
                                                 Environment.NewLine );
-            xmlObj = new FileOpsImplementation();
+            xmlObj = new FileOpsImplementation("");
             xmlObj.ProcessFile( CONFIG );
             System.Diagnostics.Debug.WriteLine( "Config xml parsed.. " + 
                                                 Environment.NewLine );

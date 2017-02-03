@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Diagnostics.PerformanceData;
 using System.Windows;
 using System.Windows.Documents;
@@ -20,22 +21,25 @@ namespace RequestRepresentation
 {
     class FileOpsImplementation : BaseFileOps
     {   //
-        public XmlDocument xmlDoc;
         private EngineObject _engineObjectTree = new EngineObject();
         private Dictionary<string, string[]> OutputTypeMap = new Dictionary<string, string[]>();
-        //
-        public FileOpsImplementation()
+        private string _filename;
+
+        public XmlDocument xmlDoc;
+        
+        
+        public FileOpsImplementation(string filename)
         {
-            xmlDoc = new XmlDocument();
+            _filename = filename;
             BuildValuetypeDictionary();
-        }
-        //
+            LoadFile(_filename);            
+        }        
 
 
         private void BuildValuetypeDictionary()
         {
             OutputTypeMap.Clear();
-            using (var fs = File.OpenRead(@"C:\Git\PTUI\UI\PlanningTool\PlanningTool\Valuetypes.csv"))
+            using (var fs = File.OpenRead(@".\Valuetypes.csv"))
             using (var reader = new StreamReader(fs))
             {
                 while (!reader.EndOfStream)
@@ -59,14 +63,24 @@ namespace RequestRepresentation
             set { _engineObjectTree = value; }
         }
 
-        public override void ProcessFile( string path )
+        public string FileName { get; set; }
+
+        public override void ProcessFile(string path)
         {
+            throw new NotImplementedException();
+        }
+
+
+        protected void LoadFile( string path )
+        {
+            
             try {
                 using ( FileStream file_reader = new FileStream( path, FileMode.Open ) )
                 using ( XmlReader reader = XmlReader.Create( file_reader ) )
                 {
-                    xmlDoc.Load( reader );
-                    buildTree();
+                    XmlDocument _xmlDoc = new XmlDocument();
+                    _xmlDoc.Load( reader );
+                    buildTree(_xmlDoc);
                 }
             }
             catch( Exception ex ) {
@@ -76,19 +90,23 @@ namespace RequestRepresentation
             }
         }
 
+        public bool Save()
+        {
+            return SaveAs(_filename);
+        }
 
         public bool SaveAs(string path)
         {
-            XmlDocument doc = new XmlDocument();
+            XmlDocument _xmldoc = new XmlDocument();
 
             //(1) the xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            XmlElement root = doc.DocumentElement;
-            doc.InsertBefore(xmlDeclaration, root);
+            XmlDeclaration xmlDeclaration = _xmldoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlElement root = _xmldoc.DocumentElement;
+            _xmldoc.InsertBefore(xmlDeclaration, root);
 
-            doc.AppendChild(processModel(doc, EngineObjectTree));
+            _xmldoc.AppendChild(processModel(_xmldoc, EngineObjectTree));
 
-            doc.Save(path);
+            _xmldoc.Save(path);
             return true;
         }
 
@@ -109,7 +127,17 @@ namespace RequestRepresentation
             return element;
         }
 
+        
 
+
+        public bool UpdateModel(EngineObjectViewModel rootnode)
+        {
+            //This will update the _engineobjecttree for any changes the user has made in the UI
+            EngineObjectTree = new EngineObject(rootnode);
+
+            return (!EngineObjectTree.isNull());
+        }
+        
 
         public bool Save(string path, EngineObjectViewModel rootnode)
         {
@@ -144,7 +172,7 @@ namespace RequestRepresentation
             return element;
         }
 
-        private void buildTree()
+        private void buildTree(XmlDocument xmlDoc)
         {
             _engineObjectTree.Name = xmlDoc.LastChild.Name;
             _engineObjectTree.NodeName = xmlDoc.LastChild.Name;
@@ -252,13 +280,13 @@ namespace RequestRepresentation
         }
 
         //returns the ouput component
-        public void AddAlloutputs()
+        public void AddAlloutputs(int timestepstart, int timestepend)
         {
-
-
             //We follow the following process
             //1. we cycle through the ESG models and pick out all the models 
             //2. we cycle through the products and pick out the products
+            //first remove all the products
+            Removealloutputs();
 
             var productlist = GetProducts(EngineObjectTree, "");
             var modeList = GetModels(EngineObjectTree);
@@ -267,7 +295,7 @@ namespace RequestRepresentation
                 string[] Valuetypes = OutputTypeMap[prod.Type];
                 foreach (string vtype in Valuetypes)
                 {
-                    AddProductOutput(prod.Name, vtype, prod.TaxWrapper, 0.ToString(), 100.ToString());
+                    AddProductOutput(prod.Name, vtype, prod.TaxWrapper, timestepstart.ToString(), timestepend.ToString());
                 }               
             }
             foreach (var model in modeList)
@@ -275,12 +303,32 @@ namespace RequestRepresentation
                 string[] Valuetypes = OutputTypeMap[model.Type];
                 foreach (string vtype in Valuetypes)
                 {
-                    AddModelOutput(model.ID ,model.Name, vtype, 0.ToString(), 100.ToString());
+                    AddModelOutput(model.ID ,model.Name, vtype, timestepstart.ToString(), timestepend.ToString());
                 }
             }
-
-
         }
+
+        public void Removealloutputs()
+        {
+            foreach (var child in EngineObjectTree.Children)
+            {
+                if (child.Name == "OutputRequirements")
+                {
+                    foreach (var child2 in child.Children)
+                    {
+                        if (child2.Name == "Queries")
+                        {
+                            child2.Children.Clear();
+                        }
+                        if (child2.Name == "Operators")
+                        {
+                            child2.Children.Clear();
+                        }
+                    }
+                }
+            }
+        }
+
 
         private List<Model> GetModels(EngineObject node)
         {

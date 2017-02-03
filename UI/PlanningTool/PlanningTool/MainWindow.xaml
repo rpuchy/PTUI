@@ -36,8 +36,8 @@
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New" Click="MenuItem_Click" />
+                <MenuItem Header="_File" DataContext="this">
+                    <MenuItem Header="_New" Click="MenuItem_Click"  />
                     <MenuItem Header="_Open" Click="MenuItem_Click_2" />
                     <MenuItem Header="_Save" Click="MenuItem_Click_3" />
                     <MenuItem Header="Save _As" Click="MenuItem_Click_4" ></MenuItem>

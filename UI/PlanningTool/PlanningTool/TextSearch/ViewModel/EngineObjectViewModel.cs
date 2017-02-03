@@ -8,7 +8,7 @@ using BusinessLib;
 namespace TreeViewWithViewModelDemo.TextSearch
 {
     /// <summary>
-    /// A UI-friendly wrapper around a Engine object.
+    /// A UI-friendly wrapper around an Engine object.
     /// </summary>
     public class EngineObjectViewModel :  INotifyPropertyChanged
     {

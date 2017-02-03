@@ -7,10 +7,11 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Data;
-using 
+using TreeViewWithViewModelDemo.TextSearch;
 
 namespace BusinessLib
 {
@@ -28,15 +29,26 @@ namespace BusinessLib
             set { _children = value; }
         }
 
-        public void EngineObject(EngineObjectViewModel _engineObject)
-        {
-            
-        }
-
         public IList<Parameter> Parameters
         {
             get { return _parameters; }
             set { _parameters = value; }
+        }
+
+        public EngineObject()
+        {
+            
+        }
+
+        public EngineObject(EngineObjectViewModel _engineObjectViewModel)
+        {
+            Name = _engineObjectViewModel.Name;
+            NodeName = _engineObjectViewModel.NodeName;
+            Parameters = _engineObjectViewModel.Parameters;
+            Children = new List<EngineObject>(
+                   (from child in _engineObjectViewModel.Children
+                    select new EngineObject(child))
+                    .ToList<EngineObject>());
         }
 
         public string Name { get; set; }
