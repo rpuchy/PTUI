@@ -123,15 +123,15 @@ namespace PlanningTool
             //We need to check if this is a table i.e. all the children have the same name 
             //TODO : move this to a property of the model
             bool table = false;
-            if (((EngineObjectViewModel) e.NewValue).Children.Count > 1)
+            /*if (((EngineObjectViewModel) e.NewValue).Children.Count > 1)
             {
                 table = true;
                 string name = ((EngineObjectViewModel)e.NewValue).Children[0].Name;
                 foreach (var child in ((EngineObjectViewModel)e.NewValue).Children)
                 {
-                    if (name != child.Name) table = false;
+                    if ((name != child.Name)  ) table = false;
                 }
-            }
+            }*/
 
             if (table)
             {
@@ -197,8 +197,9 @@ namespace PlanningTool
         {
             if (fOps != null)
             {
-                fOps.AddAlloutputs(0, 100);
+                fOps.AddAlloutputs(0, 100);                
                 VisualData = new TreeViewModel(fOps.EngineObjectTree);
+                TreeviewControl.SetData(VisualData);
             }
         }
     }
