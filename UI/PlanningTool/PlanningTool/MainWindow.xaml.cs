@@ -188,7 +188,7 @@ namespace PlanningTool
                     string filename = dlg.FileName;
                     //write the viewModel back to the main object then save
                     fOps.UpdateModel(VisualData.FirstGeneration[0]);
-                    fOps.Save();
+                    fOps.SaveAs(filename);
                 }
             }
         }
@@ -198,6 +198,16 @@ namespace PlanningTool
             if (fOps != null)
             {
                 fOps.AddAlloutputs(0, 100);                
+                VisualData = new TreeViewModel(fOps.EngineObjectTree);
+                TreeviewControl.SetData(VisualData);
+            }
+        }
+
+        private void MenuItem_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (fOps != null)
+            {
+                fOps.Removealloutputs();
                 VisualData = new TreeViewModel(fOps.EngineObjectTree);
                 TreeviewControl.SetData(VisualData);
             }

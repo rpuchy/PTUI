@@ -97,6 +97,7 @@ namespace RequestRepresentation
 
         public bool SaveAs(string path)
         {
+            _filename = path; //update the file that we point to.
             XmlDocument _xmldoc = new XmlDocument();
 
             //(1) the xml declaration is recommended, but not mandatory
