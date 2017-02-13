@@ -289,6 +289,21 @@ namespace RequestRepresentation
             //first remove all the products
             Removealloutputs();
 
+            //Add the transactions log, with scenario 1
+
+            AddtransactionLog("c:\\Foresight\\results\\transactionlog.csv",new int[] {1});
+
+            var Params = FindObjectNodeName("Params", EngineObjectTree);
+
+            Params.Parameters = SetParam("Scenarios", Params.Parameters, 1.ToString());
+
+            Params.Parameters = SetParam("InflationAdjusted", Params.Parameters, "false");
+
+            Params.Parameters = SetParam("output_file", Params.Parameters, "c:\\Foresight\\results\\results.csv");
+
+            //convert ESG to deterministic
+            ConvertToDeterministic();
+            
             var productlist = GetProducts(EngineObjectTree, "");
             var modeList = GetModels(EngineObjectTree);
             foreach (var prod in productlist)
@@ -308,6 +323,99 @@ namespace RequestRepresentation
                 }
             }
         }
+
+
+        private void ConvertToDeterministic()
+        {
+            var hw = FindObjectNodeName("ModelParameters", FindObjectName("AUYieldCurve", EngineObjectTree));
+            hw.Parameters = SetParam("VolatilityShortRate", hw.Parameters, "0.000000000001");
+            hw.Parameters = SetParam("VolatilityAdditionalParam", hw.Parameters, "0.000000000001");
+
+
+            var cpi = FindObjectName("CPI", EngineObjectTree);
+            cpi.Parameters = SetParam("sigma", cpi.Parameters, "0.0000000000001", "Sigma");
+            //TODO: we should set the mpr to mpr*sigmaold/sigmanew
+            var awe = FindObjectName("AWE", EngineObjectTree);
+            awe.Parameters = SetParam("sigma", awe.Parameters, "0.0000000000001", "Sigma");
+
+            //Create one const vol model and set all other assumptions to correct mean return in model.
+            //Find all models of type equity
+            var modeList = GetModelsEO(EngineObjectTree);
+            List<EngineObject> replacementEngineObjects = new List<EngineObject>();
+            foreach (EngineObject model in modeList)
+            {
+
+                var mtype = GetParam("Type", model.Parameters);
+                if (mtype == "EQUITY")
+                {
+                    var volID = GetParam("VolatilityModelID", model.Parameters, "volatility_model_id");
+                    var volModel = modeList.Find(x => GetParam("ModelID", x.Parameters, "model_id") == volID);
+                    double expectedReturn = 0.0;
+                    if (GetParam("Type", volModel.Parameters) == "REGIMESWITCHVOLATILITY")
+                    {
+                        var p12 =Double.Parse(GetParam("probability_state1_state2", volModel.Parameters, "ProbabilityState1Stat2"));
+                        var p21 = Double.Parse(GetParam("probability_state2_state1", volModel.Parameters, "ProbabilityState2Stat1"));
+                        var mu1 = Double.Parse(GetParam("mean_return_state1", volModel.Parameters, "MeanReturnState1"));
+                        var mu2 = Double.Parse(GetParam("mean_return_state2", volModel.Parameters, "MeanReturnState2"));
+                        var sigma1 = Double.Parse(GetParam("volatility_state1", volModel.Parameters, "VolatilityState1"));
+                        var sigma2 = Double.Parse(GetParam("volatility_state2", volModel.Parameters, "VolatilityState2"));
+
+                        var prob2 = (p12) / (p12 + p21);
+                        var prob1 = 1 - prob2;
+
+                        expectedReturn = prob1 * (mu1 - 0.5 * sigma1 * sigma1) + prob2 * (mu2 - 0.5 * sigma2 * sigma2);
+                    }
+                    else
+                    {
+                        expectedReturn = Double.Parse(GetParam("mean_return", volModel.Parameters, "MeanReturn")) - 0.5*Math.Pow(Double.Parse(GetParam("volatility", volModel.Parameters, "Volatility")),2);
+                    }
+                    expectedReturn = Math.Round(expectedReturn, 8);
+                    var tempmodel = new EngineObject()
+                    {
+                        Name = model.Name,
+                        NodeName = model.NodeName,
+                        Children = new List<EngineObject>(),
+                        Parameters = new List<Parameter>()
+                    };
+                    tempmodel.Parameters.Add(new Parameter() {Name="Type",Value="DETERMINISTICEQUITY"});
+                    tempmodel.Parameters.Add(new Parameter() { Name = "ModelID", Value = GetParam("ModelID", model.Parameters, "model_id")});
+                    tempmodel.Parameters.Add(new Parameter() { Name = "Name", Value = GetParam("Name", model.Parameters, "Name") });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "UseNominalRates", Value = GetParam("use_nominal_rates", model.Parameters, "UseNominalRates") });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "NominalRatesModelID", Value = GetParam("nominal_rates_model_id", model.Parameters, "NominalRatesModelID") });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "MeanReturn", Value = expectedReturn.ToString()});
+                    tempmodel.Parameters.Add(new Parameter() { Name = "IncomeModelID", Value = "0" });
+                    replacementEngineObjects.Add(tempmodel);                                        
+                }
+            }
+
+            var Models = FindObjectNodeName("Models", EngineObjectTree);
+
+            List<EngineObject> removeList = new List<EngineObject>();
+
+            foreach (EngineObject child in Models.Children)
+            {
+                var mtype = GetParam("Type", child.Parameters);
+                if (mtype == "EQUITY"|| mtype == "REGIMESWITCHVOLATILITY" ||mtype== "CONSTANTVOLATILITY")
+                {
+                    removeList.Add(child);
+                }
+            }
+
+            foreach (var engineObject in removeList)
+            {
+                Models.Children.Remove(engineObject);
+            }
+
+            foreach (EngineObject replacementEngineObject in replacementEngineObjects)
+            {
+                Models.Children.Add(replacementEngineObject);
+            }
+
+            var Corr = FindObjectNodeName("Correlations", EngineObjectTree);
+            Corr.Children.Clear();
+        }
+
+
 
         public void Removealloutputs()
         {
@@ -330,6 +438,20 @@ namespace RequestRepresentation
             }
         }
 
+        public void AddtransactionLog(string outputfilename, int[] scenarios)
+        {
+            EngineObject tlog_object = new EngineObject() { Name = "TransactionLog", NodeName = "TransactionLog", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            tlog_object.Parameters.Add(new Parameter() { Name = "LogFile", Value = outputfilename });
+            foreach (int scenario in scenarios)
+            {
+                EngineObject scenarios_object = new EngineObject() { Name = "Scenarios", NodeName = "Scenarios", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+                scenarios_object.Parameters.Add(new Parameter() { Name = "Scenarios", Value = scenario.ToString() });
+                tlog_object.Children.Add(scenarios_object);
+            }
+            var Params = FindObjectNodeName("Params", EngineObjectTree);
+            Params.Children.Add(tlog_object);
+        }
+
 
         private List<Model> GetModels(EngineObject node)
         {
@@ -345,6 +467,21 @@ namespace RequestRepresentation
             return temp;
         }
 
+        private List<EngineObject> GetModelsEO(EngineObject node)
+        {
+            var temp = new List<EngineObject>();
+            foreach (var child in node.Children)
+            {
+                temp.AddRange(GetModelsEO(child));
+            }
+            if (node.NodeName == "Model")
+            {
+                temp.Add(node);
+            }
+            return temp;
+        }
+
+
         private string GetParam(string ParamName, IList<Parameter> Parameters, string alternate= "")
         {
             var param = ((List<Parameter>) Parameters).Find(x => x.Name == ParamName);
@@ -356,6 +493,19 @@ namespace RequestRepresentation
 
             return (param == null)?  string.Empty : param.Value ;
         }
+
+        private IList<Parameter> SetParam(string ParamName, IList<Parameter> Parameters, string value, string alternate = "")
+        {
+            var param = ((List<Parameter>)Parameters).Find(x => x.Name == ParamName);
+            if (param == null && alternate != "")
+            {
+                param = ((List<Parameter>)Parameters).Find(x => x.Name == alternate);
+            }
+            //Parameters[((List<Parameter>) Parameters).FindIndex(x => x.Name == ParamName)].Value = value;
+            param.Value = value;
+            return Parameters;
+        }
+
 
         private List<Product> GetProducts(EngineObject node, string prev_taxwrapper)
         {
@@ -497,7 +647,6 @@ namespace RequestRepresentation
             return Operator;
         }
 
-
         private void AddProductOutput(string productName, string valueType, string taxWrapper, string timestepstart, string timestepend)
         {
 
@@ -505,24 +654,17 @@ namespace RequestRepresentation
             EngineObject OperatorPart = newOperator(taxWrapper+"_"+productName + "_" + valueType,
                 "Query_" + taxWrapper + "_" + productName + "_" + valueType, valueType, timestepstart, timestepend);
 
-            foreach (var child in EngineObjectTree.Children)
-            {
-                if (child.Name == "OutputRequirements")
-                {
-                    foreach (var child2 in child.Children)
-                    {
-                        if (child2.Name == "Queries")
-                        {
-                            child2.Children.Add(QueryPart);
-                        }
-                        if (child2.Name == "Operators")
-                        {
-                            child2.Children.Add(OperatorPart);
-                        }
-                    }
-                }
-            }            
+
+            var queries = FindObjectNodeName("Queries", EngineObjectTree);
+            var operators = FindObjectNodeName("Operators", EngineObjectTree);
+
+            queries.Children.Add(QueryPart);
+            operators.Children.Add(OperatorPart);
+
+      
         }
+
+
 
         private void AddModelOutput(string modelID, string Name, string valueType, string timestepstart, string timestepend)
         {
@@ -531,27 +673,91 @@ namespace RequestRepresentation
             EngineObject OperatorPart = newOperator("Oper_" +modelID +"_"+ Name + "_" + valueType,
                 "Query_" + modelID + "_" + valueType, valueType, timestepstart, timestepend);
 
-            foreach (var child in EngineObjectTree.Children)
-            {
-                if (child.Name == "OutputRequirements")
-                {
-                    foreach (var child2 in child.Children)
-                    {
-                        if (child2.Name == "Queries")
-                        {
-                            child2.Children.Add(QueryPart);
-                        }
-                        if (child2.Name == "Operators")
-                        {
-                            child2.Children.Add(OperatorPart);
-                        }
-                    }
-                }
-            }
+            var queries = FindObjectNodeName("Queries", EngineObjectTree);
+            var operators = FindObjectNodeName("Operators", EngineObjectTree);
+
+            queries.Children.Add(QueryPart);
+            operators.Children.Add(OperatorPart);
+
         }
 
 
+        
+        private static EngineObject FindObjectNodeName(string name, EngineObject startingNode)
+        {
+            foreach (var child in startingNode.Children)
+            {
+                if (child.NodeName == name)
+                {
+                    return child;
+                }
+                var e_obj = FindObjectNodeName(name, child);
+                if (e_obj != null)
+                {
+                    return e_obj;
+                }
+            }
+            return null;
+        }
 
+        private static EngineObject FindObjectName(string name, EngineObject startingNode)
+        {
+            foreach (var child in startingNode.Children)
+            {
+                if (child.Name == name)
+                {
+                    return child;
+                }
+                var e_obj = FindObjectName(name, child);
+                if (e_obj != null)
+                {
+                    return e_obj;
+                }
+            }
+            return null;
+        }
+
+        private EngineObject economicModel(List<EngineObject> models, string modelName, string currency, string calibration_type)
+        {
+            var tempo = new EngineObject() {Name="economic_model",NodeName = "economic_model", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            tempo.Parameters.Add(new Parameter() {Name = "model_name", Value=modelName});
+            tempo.Parameters.Add(new Parameter() { Name = "currency", Value = currency});
+            tempo.Parameters.Add(new Parameter() { Name = "current_mean_return", Value = "0"});
+            var calType = new EngineObject() {Name="types", NodeName = "types", Parameters = new List<Parameter>(), Children = new List<EngineObject>()};
+            calType.Parameters.Add(new Parameter() {Name = "calibration_type",Value=calibration_type});
+            tempo.Children.Add(calType);
+            foreach (var engineObject in models)
+            {
+                tempo.Children.Add(engineObject);
+            }
+            return tempo;
+        }
+
+        private void CalibrationsTemplate(string outputfilename)
+        {
+            
+
+            string EffectiveDate = GetParam("EffectiveDate", FindObjectNodeName("Params", EngineObjectTree).Parameters,
+                "effective_date");
+
+            var Models = FindObjectNodeName("Models", EngineObjectTree);
+
+            XmlDocument doc = new XmlDocument();
+
+            //(1) the xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlElement root = doc.DocumentElement;
+            doc.InsertBefore(xmlDeclaration, root);
+
+            
+
+
+            doc.AppendChild(processModel(doc, rootnode));
+
+            doc.Save(outputfilename);
+
+
+        }
 
         //
         /// <summary>

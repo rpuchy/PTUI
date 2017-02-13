@@ -63,7 +63,7 @@ namespace BusinessLib
         public void AddParameter(Parameter _param)
         {
             _parameters.Add(_param);
-        }
+        }        
     }
 
     public class Parameter: DependencyObject, INotifyPropertyChanged, IEquatable<Parameter>
