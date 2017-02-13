@@ -20,15 +20,15 @@ namespace BusinessLib
     /// <summary>
     /// A simple data transfer object (DTO) that contains raw data about a engine object.
     /// </summary>
-    public class EngineObject
+    public class EngineObject 
     {
         IList<EngineObject> _children = new List<EngineObject>();
         ParamList _parameters = new ParamList();
            
         public IList<EngineObject> Children
         {
-          //  get { return _children; }
-            set { _children = value; }
+            get { return _children; }
+          //  set { _children = value; }
         }
 
         
@@ -41,7 +41,8 @@ namespace BusinessLib
 
         public EngineObject()
         {
-            
+            _children = new List<EngineObject>();
+            _parameters = new ParamList();
         }
 
         public EngineObject(EngineObjectViewModel _engineObjectViewModel)
@@ -49,10 +50,14 @@ namespace BusinessLib
             Name = _engineObjectViewModel.Name;
             NodeName = _engineObjectViewModel.NodeName;
             Parameters = _engineObjectViewModel.Parameters;
-            Children = new List<EngineObject>(
+            _children = new List<EngineObject>(
                    (from child in _engineObjectViewModel.Children
                     select new EngineObject(child))
                     .ToList<EngineObject>());
+            foreach (var child in Children)
+            {
+                child.Parent = this;
+            }
         }
 
         public EngineObject Parent { get; set; }
@@ -60,11 +65,6 @@ namespace BusinessLib
         public string Name { get; set; }
 
         public string NodeName { get; set; }
-
-        public void AddEngineObjectChild(EngineObject child)
-        {
-            _children.Add(child);
-        }
 
         public void AddParameter(Parameter _param)
         {
@@ -143,6 +143,14 @@ namespace BusinessLib
             _children.Add(_obj);
         }
 
+        public void AddChildren(List<EngineObject> _objs)
+        {
+            foreach (EngineObject _obj in _objs)
+            {
+                AddChild(_obj);
+            }
+        }
+
 
     }
 
@@ -165,7 +173,7 @@ namespace BusinessLib
         public bool Equals(Parameter other)
         {
             if (other == null) return false;
-            return (this.Name.Equals(other.Name)&&this.Value.Equals(other.Value));
+            return (this.Name.Equals(other.Name));
         }
 
         public static readonly DependencyProperty _name =
