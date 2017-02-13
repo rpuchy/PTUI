@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Data;
+using PlanningTool;
 using TreeViewWithViewModelDemo.TextSearch;
 
 namespace BusinessLib
@@ -21,7 +22,7 @@ namespace BusinessLib
     public class EngineObject
     {
         IList<EngineObject> _children = new List<EngineObject>();
-        IList<Parameter> _parameters = new List<Parameter>();
+        ParamList _parameters = new ParamList();
            
         public IList<EngineObject> Children
         {
@@ -29,7 +30,7 @@ namespace BusinessLib
             set { _children = value; }
         }
 
-        public IList<Parameter> Parameters
+        public ParamList Parameters
         {
             get { return _parameters; }
             set { _parameters = value; }
@@ -63,7 +64,23 @@ namespace BusinessLib
         public void AddParameter(Parameter _param)
         {
             _parameters.Add(_param);
-        }        
+        }
+
+        public EngineObject FindObject(string tagName)
+        {
+            if (NodeName == tagName)
+            {
+                return this;
+            }
+            foreach (var engineObject in this.Children)
+            {
+                return engineObject.FindObject(tagName);
+            }
+            return null;
+        }
+    
+
+
     }
 
     public class Parameter: DependencyObject, INotifyPropertyChanged, IEquatable<Parameter>
@@ -102,9 +119,9 @@ namespace BusinessLib
         DependencyProperty.Register("Value", typeof(string),
         typeof(Parameter), new UIPropertyMetadata(null));
 
-        public string Value
+        public object Value
         {
-            get { return (string)GetValue(_value); }
+            get { return (object)GetValue(_value); }
             set { SetValue(_value, value); }
         }
 

@@ -62,6 +62,7 @@
     <Compile Include="FileOpsImplementation.cs" />
     <Compile Include="InputObjectConstraint.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="ParamList.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="SearchDescriptor.cs" />
     <Compile Include="SharedDefines.cs" />
