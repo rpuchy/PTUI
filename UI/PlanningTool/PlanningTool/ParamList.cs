@@ -7,12 +7,27 @@ using BusinessLib;
 
 namespace PlanningTool
 {
-    class ParamList : List<Parameter>
+    public class ParamList : List<Parameter>
     {
         public object this[string name]
         {
-            get { return Find(x => x.Name == name).Value; }
-            set { this[FindIndex(x => x.Name == name)].Value = value; }
+            get
+            {
+                try
+                {
+                    return Find(x => x.Name == name).Value;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                //TODO put logic in here to try alternative. 
+
+                this[FindIndex(x => x.Name == name)].Value = value;
+            }
         }
     }
 }

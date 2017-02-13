@@ -138,7 +138,7 @@ namespace PlanningTool
                 //if it's a table we change the parameter names and show more/fewer columns
                 foreach (var child in ((EngineObjectViewModel) e.NewValue).Children)
                 {
-                    _parameters.Add(new Parameter() {Name=child.Parameters[0].Value, Value = child.Parameters[1].Value});
+                    _parameters.Add(new Parameter() {Name=child.Parameters[0].Value.ToString(), Value = child.Parameters[1].Value});
                 }
             }
             else

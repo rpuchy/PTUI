@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using BusinessLib;
+using PlanningTool;
 
 namespace TreeViewWithViewModelDemo.TextSearch
 {
@@ -16,7 +17,7 @@ namespace TreeViewWithViewModelDemo.TextSearch
 
         readonly ReadOnlyCollection<EngineObjectViewModel> _children;
         readonly EngineObjectViewModel _parent;
-        private readonly IList<Parameter> _parameters; 
+        private readonly ParamList _parameters; 
         readonly EngineObject _engineObject;
         private readonly String _fullyqualifiedname;
 
@@ -73,7 +74,7 @@ namespace TreeViewWithViewModelDemo.TextSearch
             get { return _fullyqualifiedname; }
         }
 
-        public IList<Parameter> Parameters
+        public ParamList Parameters
         {
             get { return _parameters; }
         }

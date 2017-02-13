@@ -74,11 +74,63 @@ namespace BusinessLib
             }
             foreach (var engineObject in this.Children)
             {
-                return engineObject.FindObject(tagName);
+                var _obj = engineObject.FindObject(tagName);
+                if (_obj != null)
+                {
+                    return _obj;
+                }
             }
             return null;
         }
-    
+
+        public EngineObject FindObject(string value, string parameter)
+        {
+            if (Parameters[parameter]?.ToString() == value)
+            {
+                return this;
+            }
+            foreach (var engineObject in Children)
+            {
+                var _obj = engineObject.FindObject(value, parameter);
+                if (_obj != null)
+                {
+                    return _obj;
+                }
+            }
+            return null;
+        }
+
+        public List<EngineObject> FindObjects(string value, string parameter)
+        {
+            List<EngineObject> temp = new List<EngineObject>();
+            if (Parameters[parameter].ToString() == value)
+            {
+                temp.Add(this);
+            }
+            foreach (var engineObject in Children)
+            {
+                var _obj = engineObject.FindObjects(value, parameter);
+                temp.AddRange(_obj);
+            }
+            return temp;
+
+        }
+
+        public List<EngineObject> FindObjects(string tagname)
+        {
+            List<EngineObject> temp = new List<EngineObject>();
+            if (this.NodeName == tagname)
+            {
+                temp.Add(this);
+            }
+            foreach (var engineObject in Children)
+            {
+                var _obj = engineObject.FindObjects(tagname);
+                temp.AddRange(_obj);
+            }
+            return temp;
+
+        }
 
 
     }

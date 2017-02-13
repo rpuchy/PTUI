@@ -117,7 +117,7 @@ namespace RequestRepresentation
             foreach (var param in node.Parameters)
             {
                 var newparam = doc.CreateElement(string.Empty, param.Name, string.Empty);
-                newparam.AppendChild(doc.CreateTextNode(param.Value));
+                newparam.AppendChild(doc.CreateTextNode(param.Value.ToString()));
                 element.AppendChild(newparam);
             }
             foreach (var child in node.Children)
@@ -162,7 +162,7 @@ namespace RequestRepresentation
             foreach (var param in node.Parameters)
             {
                 var newparam = doc.CreateElement(string.Empty, param.Name, string.Empty);
-                newparam.AppendChild(doc.CreateTextNode(param.Value));
+                newparam.AppendChild(doc.CreateTextNode(param.Value.ToString()));
                 element.AppendChild(newparam);
             }
             foreach (var child in node.Children)
@@ -196,9 +196,9 @@ namespace RequestRepresentation
             return (count > 0);
         }
 
-        private IList<Parameter> processParameters(XmlNode _node)
+        private ParamList processParameters(XmlNode _node)
         {
-            List<Parameter> temp =new List<Parameter>();
+            ParamList temp =new ParamList();
             if (_node.ChildNodes.Count > 0)
             {
                 foreach (XmlNode child in _node.ChildNodes)
@@ -295,11 +295,11 @@ namespace RequestRepresentation
 
             var Params = FindObjectNodeName("Params", EngineObjectTree);
 
-            Params.Parameters = SetParam("Scenarios", Params.Parameters, 1.ToString());
+            Params.Parameters["Scenarios"] = 1.ToString(); //SetParam("Scenarios", Params.Parameters, 1.ToString());
 
-            Params.Parameters = SetParam("InflationAdjusted", Params.Parameters, "false");
+            Params.Parameters["InflationAdjusted"] = "false";// SetParam("InflationAdjusted", Params.Parameters, "false");
 
-            Params.Parameters = SetParam("output_file", Params.Parameters, "c:\\Foresight\\results\\results.csv");
+            Params.Parameters["output_file"] = "c:\\Foresight\\results\\results.csv"; //SetParam("output_file", Params.Parameters, );
 
             //convert ESG to deterministic
             ConvertToDeterministic();
@@ -327,38 +327,38 @@ namespace RequestRepresentation
 
         private void ConvertToDeterministic()
         {
-            var hw = FindObjectNodeName("ModelParameters", FindObjectName("AUYieldCurve", EngineObjectTree));
-            hw.Parameters = SetParam("VolatilityShortRate", hw.Parameters, "0.000000000001");
-            hw.Parameters = SetParam("VolatilityAdditionalParam", hw.Parameters, "0.000000000001");
+            var hw = EngineObjectTree.FindObject("AUYieldCurve","Name").FindObject("ModelParameters");// FindObjectNodeName("ModelParameters", FindObjectName("AUYieldCurve", EngineObjectTree));
+            hw.Parameters["VolatilityShortRate"] = "0.000000000001"; //SetParam("VolatilityShortRate", hw.Parameters, "0.000000000001");
+            hw.Parameters["VolatilityAdditionalParam"] = "0.000000000001"; //SetParam("VolatilityAdditionalParam", hw.Parameters, "0.000000000001");
 
 
-            var cpi = FindObjectName("CPI", EngineObjectTree);
-            cpi.Parameters = SetParam("sigma", cpi.Parameters, "0.0000000000001", "Sigma");
+            var cpi = EngineObjectTree.FindObject("CPI","Name"); // FindObjectName("CPI", EngineObjectTree);
+            cpi.Parameters["sigma"] = "0.0000000000001";//SetParam("sigma", cpi.Parameters, "0.0000000000001", "Sigma");
             //TODO: we should set the mpr to mpr*sigmaold/sigmanew
-            var awe = FindObjectName("AWE", EngineObjectTree);
-            awe.Parameters = SetParam("sigma", awe.Parameters, "0.0000000000001", "Sigma");
+            var awe = EngineObjectTree.FindObject("AWE", "Name");// FindObjectName("AWE", EngineObjectTree);
+            awe.Parameters["sigma"] = "0.0000000000001"; //SetParam("sigma", awe.Parameters, "0.0000000000001", "Sigma");
 
             //Create one const vol model and set all other assumptions to correct mean return in model.
             //Find all models of type equity
-            var modeList = GetModelsEO(EngineObjectTree);
+            var modeList = EngineObjectTree.FindObjects("Model");
+            var Models = EngineObjectTree.FindObject("Models");
             List<EngineObject> replacementEngineObjects = new List<EngineObject>();
             foreach (EngineObject model in modeList)
             {
 
-                var mtype = GetParam("Type", model.Parameters);
-                if (mtype == "EQUITY")
+                if (model.Parameters["Type"]?.ToString() == "EQUITY")
                 {
-                    var volID = GetParam("VolatilityModelID", model.Parameters, "volatility_model_id");
-                    var volModel = modeList.Find(x => GetParam("ModelID", x.Parameters, "model_id") == volID);
+                    var volID = model.Parameters["volatility_model_id"];// GetParam("VolatilityModelID", model.Parameters, "volatility_model_id");
+                    var volModel = Models.FindObject(volID.ToString(),"ModelID");// modeList.Find(x => GetParam("ModelID", x.Parameters, "model_id") == volID);
                     double expectedReturn = 0.0;
-                    if (GetParam("Type", volModel.Parameters) == "REGIMESWITCHVOLATILITY")
+                    if (volModel.Parameters["Type"].ToString() == "REGIMESWITCHVOLATILITY")
                     {
-                        var p12 =Double.Parse(GetParam("probability_state1_state2", volModel.Parameters, "ProbabilityState1Stat2"));
-                        var p21 = Double.Parse(GetParam("probability_state2_state1", volModel.Parameters, "ProbabilityState2Stat1"));
-                        var mu1 = Double.Parse(GetParam("mean_return_state1", volModel.Parameters, "MeanReturnState1"));
-                        var mu2 = Double.Parse(GetParam("mean_return_state2", volModel.Parameters, "MeanReturnState2"));
-                        var sigma1 = Double.Parse(GetParam("volatility_state1", volModel.Parameters, "VolatilityState1"));
-                        var sigma2 = Double.Parse(GetParam("volatility_state2", volModel.Parameters, "VolatilityState2"));
+                        var p12 = Double.Parse(volModel.Parameters["ProbabilityState1Stat2"].ToString());
+                        var p21 = Double.Parse(volModel.Parameters["ProbabilityState2Stat1"].ToString());
+                        var mu1 = Double.Parse(volModel.Parameters["MeanReturnState1"].ToString());
+                        var mu2 = Double.Parse(volModel.Parameters["MeanReturnState2"].ToString());
+                        var sigma1 = Double.Parse(volModel.Parameters["VolatilityState1"].ToString());
+                        var sigma2 = Double.Parse(volModel.Parameters["VolatilityState2"].ToString());
 
                         var prob2 = (p12) / (p12 + p21);
                         var prob1 = 1 - prob2;
@@ -367,7 +367,7 @@ namespace RequestRepresentation
                     }
                     else
                     {
-                        expectedReturn = Double.Parse(GetParam("mean_return", volModel.Parameters, "MeanReturn")) - 0.5*Math.Pow(Double.Parse(GetParam("volatility", volModel.Parameters, "Volatility")),2);
+                        expectedReturn = Double.Parse(volModel.Parameters["mean_return"].ToString()) - 0.5*Math.Pow(Double.Parse(volModel.Parameters["volatility"].ToString()),2);
                     }
                     expectedReturn = Math.Round(expectedReturn, 8);
                     var tempmodel = new EngineObject()
@@ -375,26 +375,24 @@ namespace RequestRepresentation
                         Name = model.Name,
                         NodeName = model.NodeName,
                         Children = new List<EngineObject>(),
-                        Parameters = new List<Parameter>()
+                        Parameters = new ParamList()
                     };
                     tempmodel.Parameters.Add(new Parameter() {Name="Type",Value="DETERMINISTICEQUITY"});
-                    tempmodel.Parameters.Add(new Parameter() { Name = "ModelID", Value = GetParam("ModelID", model.Parameters, "model_id")});
-                    tempmodel.Parameters.Add(new Parameter() { Name = "Name", Value = GetParam("Name", model.Parameters, "Name") });
-                    tempmodel.Parameters.Add(new Parameter() { Name = "UseNominalRates", Value = GetParam("use_nominal_rates", model.Parameters, "UseNominalRates") });
-                    tempmodel.Parameters.Add(new Parameter() { Name = "NominalRatesModelID", Value = GetParam("nominal_rates_model_id", model.Parameters, "NominalRatesModelID") });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "ModelID", Value = model.Parameters["ModelID"]});
+                    tempmodel.Parameters.Add(new Parameter() { Name = "Name", Value = model.Parameters["Name"] });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "UseNominalRates", Value = model.Parameters["UseNominalRates"]});
+                    tempmodel.Parameters.Add(new Parameter() { Name = "NominalRatesModelID", Value = model.Parameters["NominalRatesModelID"]});
                     tempmodel.Parameters.Add(new Parameter() { Name = "MeanReturn", Value = expectedReturn.ToString()});
                     tempmodel.Parameters.Add(new Parameter() { Name = "IncomeModelID", Value = "0" });
                     replacementEngineObjects.Add(tempmodel);                                        
                 }
             }
 
-            var Models = FindObjectNodeName("Models", EngineObjectTree);
-
             List<EngineObject> removeList = new List<EngineObject>();
 
             foreach (EngineObject child in Models.Children)
             {
-                var mtype = GetParam("Type", child.Parameters);
+                var mtype = child.Parameters["Type"].ToString(); // GetParam("Type", child.Parameters);
                 if (mtype == "EQUITY"|| mtype == "REGIMESWITCHVOLATILITY" ||mtype== "CONSTANTVOLATILITY")
                 {
                     removeList.Add(child);
@@ -411,7 +409,7 @@ namespace RequestRepresentation
                 Models.Children.Add(replacementEngineObject);
             }
 
-            var Corr = FindObjectNodeName("Correlations", EngineObjectTree);
+            var Corr = EngineObjectTree.FindObject("Correlations");// FindObjectNodeName("Correlations", EngineObjectTree);
             Corr.Children.Clear();
         }
 
@@ -419,32 +417,17 @@ namespace RequestRepresentation
 
         public void Removealloutputs()
         {
-            foreach (var child in EngineObjectTree.Children)
-            {
-                if (child.Name == "OutputRequirements")
-                {
-                    foreach (var child2 in child.Children)
-                    {
-                        if (child2.Name == "Queries")
-                        {
-                            child2.Children.Clear();
-                        }
-                        if (child2.Name == "Operators")
-                        {
-                            child2.Children.Clear();
-                        }
-                    }
-                }
-            }
+            EngineObjectTree.FindObject("Queries").Children.Clear();
+            EngineObjectTree.FindObject("Operators").Children.Clear();
         }
 
         public void AddtransactionLog(string outputfilename, int[] scenarios)
         {
-            EngineObject tlog_object = new EngineObject() { Name = "TransactionLog", NodeName = "TransactionLog", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject tlog_object = new EngineObject() { Name = "TransactionLog", NodeName = "TransactionLog", Children = new List<EngineObject>(), Parameters = new ParamList() };
             tlog_object.Parameters.Add(new Parameter() { Name = "LogFile", Value = outputfilename });
             foreach (int scenario in scenarios)
             {
-                EngineObject scenarios_object = new EngineObject() { Name = "Scenarios", NodeName = "Scenarios", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+                EngineObject scenarios_object = new EngineObject() { Name = "Scenarios", NodeName = "Scenarios", Children = new List<EngineObject>(), Parameters = new ParamList() };
                 scenarios_object.Parameters.Add(new Parameter() { Name = "Scenarios", Value = scenario.ToString() });
                 tlog_object.Children.Add(scenarios_object);
             }
@@ -462,51 +445,12 @@ namespace RequestRepresentation
             }
             if (node.NodeName == "Model")
             {
-                temp.Add(new Model() {Name  = GetParam("Name", node.Parameters), ID = GetParam("ModelID",node.Parameters), Type = GetParam("Class", node.Parameters,"Type") });
+                temp.Add(new Model() {Name  =  node.Parameters["Name"].ToString(), ID = node.Parameters["ModelID"].ToString(), Type = node.Parameters["Class"].ToString()});
             }
             return temp;
         }
 
-        private List<EngineObject> GetModelsEO(EngineObject node)
-        {
-            var temp = new List<EngineObject>();
-            foreach (var child in node.Children)
-            {
-                temp.AddRange(GetModelsEO(child));
-            }
-            if (node.NodeName == "Model")
-            {
-                temp.Add(node);
-            }
-            return temp;
-        }
-
-
-        private string GetParam(string ParamName, IList<Parameter> Parameters, string alternate= "")
-        {
-            var param = ((List<Parameter>) Parameters).Find(x => x.Name == ParamName);
-            if (param == null&&alternate!="")
-            {
-                param = ((List<Parameter>)Parameters).Find(x => x.Name == alternate);
-            }
-
-
-            return (param == null)?  string.Empty : param.Value ;
-        }
-
-        private IList<Parameter> SetParam(string ParamName, IList<Parameter> Parameters, string value, string alternate = "")
-        {
-            var param = ((List<Parameter>)Parameters).Find(x => x.Name == ParamName);
-            if (param == null && alternate != "")
-            {
-                param = ((List<Parameter>)Parameters).Find(x => x.Name == alternate);
-            }
-            //Parameters[((List<Parameter>) Parameters).FindIndex(x => x.Name == ParamName)].Value = value;
-            param.Value = value;
-            return Parameters;
-        }
-
-
+        
         private List<Product> GetProducts(EngineObject node, string prev_taxwrapper)
         {
             var temp = new List<Product>();
@@ -536,7 +480,7 @@ namespace RequestRepresentation
             {
                 if (param.Name == "Type")
                 {
-                    return param.Value;
+                    return param.Value.ToString();
                 }
 
             }
@@ -549,7 +493,7 @@ namespace RequestRepresentation
                     {
                         if (param.Name == "Type")
                         {
-                            return param.Value;
+                            return param.Value.ToString();
                         }
                     }
                 }
@@ -561,12 +505,12 @@ namespace RequestRepresentation
         private EngineObject newQueryFilter(string Field, string Value, string ObjectName)
         {
 
-            EngineObject QueryFilterCriter1 = new EngineObject() { Name = "QueryFilterCriteria", NodeName = "QueryFilterCriteria", Parameters = new List<Parameter>() };
+            EngineObject QueryFilterCriter1 = new EngineObject() { Name = "QueryFilterCriteria", NodeName = "QueryFilterCriteria", Parameters = new ParamList() };
             QueryFilterCriter1.Parameters.Add(new Parameter() { Name = "Field", Value = Field });
             QueryFilterCriter1.Parameters.Add(new Parameter() { Name = "Value", Value = Value });
-            EngineObject Where = new EngineObject() { Name = "Where", NodeName = "Where", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Where = new EngineObject() { Name = "Where", NodeName = "Where", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Where.Children.Add(QueryFilterCriter1);
-            EngineObject QueryFilter = new EngineObject() { Name = "QueryFilter", NodeName = "QueryFilter", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject QueryFilter = new EngineObject() { Name = "QueryFilter", NodeName = "QueryFilter", Children = new List<EngineObject>(), Parameters = new ParamList() };
             QueryFilter.Children.Add(Where);
             QueryFilter.Parameters.Add(new Parameter() { Name = "ObjectName", Value = ObjectName });
 
@@ -578,10 +522,10 @@ namespace RequestRepresentation
         private EngineObject Value(string Valuetype)
         {
 
-            EngineObject ValueTypes = new EngineObject() { Name = "ValueTypes", NodeName = "ValueTypes", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject ValueTypes = new EngineObject() { Name = "ValueTypes", NodeName = "ValueTypes", Children = new List<EngineObject>(), Parameters = new ParamList() };
             ValueTypes.Parameters.Add(new Parameter() { Name = "ValueType", Value = Valuetype });
 
-            EngineObject Values = new EngineObject() { Name = "Values", NodeName = "Values", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Values = new EngineObject() { Name = "Values", NodeName = "Values", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Values.Children.Add(ValueTypes);
 
             return Values;
@@ -592,11 +536,11 @@ namespace RequestRepresentation
             EngineObject QueryFilter1 = newQueryFilter("Name", productName, "product");
             EngineObject QueryFilter2 = newQueryFilter("Name", taxWrapper, "tax_wrapper");
 
-            EngineObject Filter = new EngineObject() { Name = "Filter", NodeName = "Filter", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Filter = new EngineObject() { Name = "Filter", NodeName = "Filter", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Filter.Children.Add(QueryFilter1);
             Filter.Children.Add(QueryFilter2);
 
-            EngineObject Query = new EngineObject() { Name = "Query", NodeName = "Query", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Query = new EngineObject() { Name = "Query", NodeName = "Query", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Query.Parameters.Add(new Parameter() { Name = "QueryID", Value = QueryID });
             Query.Parameters.Add(new Parameter() { Name = "Type", Value = "SIMVALUE" });
             Query.Children.Add(Value(ValueType));
@@ -610,11 +554,11 @@ namespace RequestRepresentation
         {
             EngineObject QueryFilter1 = newQueryFilter("ModelID", modelID, "model");
 
-            EngineObject Filter = new EngineObject() { Name = "Filter", NodeName = "Filter", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Filter = new EngineObject() { Name = "Filter", NodeName = "Filter", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Filter.Children.Add(QueryFilter1);
 
 
-            EngineObject Query = new EngineObject() { Name = "Query", NodeName = "Query", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Query = new EngineObject() { Name = "Query", NodeName = "Query", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Query.Parameters.Add(new Parameter() { Name = "QueryID", Value = QueryID });
             Query.Parameters.Add(new Parameter() { Name = "Type", Value = "SIMVALUE" });
             Query.Children.Add(Value(ValueType));
@@ -626,21 +570,21 @@ namespace RequestRepresentation
 
         private EngineObject newOperator(string operatorID, string queryID, string valuetype, string timestepstart, string timestepend)
         {
-            EngineObject OperationApplyTo = new EngineObject() {Name= "OperationApplyTo", NodeName = "OperationApplyTo", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            EngineObject OperationApplyTo = new EngineObject() {Name= "OperationApplyTo", NodeName = "OperationApplyTo", Children = new List<EngineObject>(), Parameters = new ParamList()};
             OperationApplyTo.Parameters.Add(new Parameter() {Name= "QueryID", Value=queryID});
             OperationApplyTo.Parameters.Add(new Parameter() { Name = "Value", Value = valuetype });
             OperationApplyTo.Parameters.Add(new Parameter() { Name = "TimeStepStart", Value = timestepstart });
             OperationApplyTo.Parameters.Add(new Parameter() { Name = "TimeStepEnd", Value = timestepend });
 
-            EngineObject ApplyTo = new EngineObject() {Name="ApplyTo",NodeName = "ApplyTo", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            EngineObject ApplyTo = new EngineObject() {Name="ApplyTo",NodeName = "ApplyTo", Children = new List<EngineObject>(), Parameters = new ParamList()};
             ApplyTo.Children.Add(OperationApplyTo);
 
-            EngineObject Operation = new EngineObject() { Name = "Operation", NodeName = "Operation", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Operation = new EngineObject() { Name = "Operation", NodeName = "Operation", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Operation.Children.Add(ApplyTo);
             Operation.Parameters.Add(new Parameter() {Name="Name",Value= "Scenarios" });
             Operation.Parameters.Add(new Parameter() { Name = "Type", Value = "SCENARIOALL" });
 
-            EngineObject Operator = new EngineObject() { Name = "Operator", NodeName = "Operator", Children = new List<EngineObject>(), Parameters = new List<Parameter>() };
+            EngineObject Operator = new EngineObject() { Name = "Operator", NodeName = "Operator", Children = new List<EngineObject>(), Parameters = new ParamList() };
             Operator.Children.Add(Operation);
             Operator.Parameters.Add(new Parameter() {Name= "OperatorID", Value=operatorID});
 
@@ -699,31 +643,14 @@ namespace RequestRepresentation
             }
             return null;
         }
-
-        private static EngineObject FindObjectName(string name, EngineObject startingNode)
-        {
-            foreach (var child in startingNode.Children)
-            {
-                if (child.Name == name)
-                {
-                    return child;
-                }
-                var e_obj = FindObjectName(name, child);
-                if (e_obj != null)
-                {
-                    return e_obj;
-                }
-            }
-            return null;
-        }
-
+        
         private EngineObject economicModel(List<EngineObject> models, string modelName, string currency, string calibration_type)
         {
-            var tempo = new EngineObject() {Name="economic_model",NodeName = "economic_model", Children = new List<EngineObject>(), Parameters = new List<Parameter>()};
+            var tempo = new EngineObject() {Name="economic_model",NodeName = "economic_model", Children = new List<EngineObject>(), Parameters = new ParamList()};
             tempo.Parameters.Add(new Parameter() {Name = "model_name", Value=modelName});
             tempo.Parameters.Add(new Parameter() { Name = "currency", Value = currency});
             tempo.Parameters.Add(new Parameter() { Name = "current_mean_return", Value = "0"});
-            var calType = new EngineObject() {Name="types", NodeName = "types", Parameters = new List<Parameter>(), Children = new List<EngineObject>()};
+            var calType = new EngineObject() {Name="types", NodeName = "types", Parameters = new ParamList(), Children = new List<EngineObject>()};
             calType.Parameters.Add(new Parameter() {Name = "calibration_type",Value=calibration_type});
             tempo.Children.Add(calType);
             foreach (var engineObject in models)
@@ -735,11 +662,9 @@ namespace RequestRepresentation
 
         private void CalibrationsTemplate(string outputfilename)
         {
-            
 
-            string EffectiveDate = GetParam("EffectiveDate", FindObjectNodeName("Params", EngineObjectTree).Parameters,
-                "effective_date");
 
+            string EffectiveDate = EngineObjectTree.FindObject("Params").Parameters["EffectiveDate"].ToString();
             var Models = FindObjectNodeName("Models", EngineObjectTree);
 
             XmlDocument doc = new XmlDocument();
@@ -752,7 +677,7 @@ namespace RequestRepresentation
             
 
 
-            doc.AppendChild(processModel(doc, rootnode));
+            //doc.AppendChild(processModel(doc, rootnode));
 
             doc.Save(outputfilename);
 
