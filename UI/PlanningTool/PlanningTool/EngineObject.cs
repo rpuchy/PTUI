@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Data;
@@ -26,9 +27,11 @@ namespace BusinessLib
            
         public IList<EngineObject> Children
         {
-            get { return _children; }
+          //  get { return _children; }
             set { _children = value; }
         }
+
+        
 
         public ParamList Parameters
         {
@@ -52,6 +55,8 @@ namespace BusinessLib
                     .ToList<EngineObject>());
         }
 
+        public EngineObject Parent { get; set; }
+
         public string Name { get; set; }
 
         public string NodeName { get; set; }
@@ -72,7 +77,7 @@ namespace BusinessLib
             {
                 return this;
             }
-            foreach (var engineObject in this.Children)
+            foreach (var engineObject in this._children)
             {
                 var _obj = engineObject.FindObject(tagName);
                 if (_obj != null)
@@ -89,7 +94,7 @@ namespace BusinessLib
             {
                 return this;
             }
-            foreach (var engineObject in Children)
+            foreach (var engineObject in this._children)
             {
                 var _obj = engineObject.FindObject(value, parameter);
                 if (_obj != null)
@@ -107,7 +112,7 @@ namespace BusinessLib
             {
                 temp.Add(this);
             }
-            foreach (var engineObject in Children)
+            foreach (var engineObject in this._children)
             {
                 var _obj = engineObject.FindObjects(value, parameter);
                 temp.AddRange(_obj);
@@ -123,13 +128,19 @@ namespace BusinessLib
             {
                 temp.Add(this);
             }
-            foreach (var engineObject in Children)
+            foreach (var engineObject in this._children)
             {
                 var _obj = engineObject.FindObjects(tagname);
                 temp.AddRange(_obj);
             }
             return temp;
 
+        }
+
+        public void AddChild(EngineObject _obj)
+        {
+            _obj.Parent = this;
+            _children.Add(_obj);
         }
 
 
