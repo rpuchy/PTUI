@@ -212,6 +212,12 @@ namespace PlanningTool
                 TreeviewControl.SetData(VisualData);
             }
         }
+
+        private void MenuItem_OnClick_7(object sender, RoutedEventArgs e)
+        {
+
+            new CalibrationTemplate().Show();
+        }
     }
 
 

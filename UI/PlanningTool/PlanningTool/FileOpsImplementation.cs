@@ -80,7 +80,7 @@ namespace RequestRepresentation
                 {
                     XmlDocument _xmlDoc = new XmlDocument();
                     _xmlDoc.Load( reader );
-                    buildTree(_xmlDoc);
+                    _engineObjectTree = buildTree(_xmlDoc);
                 }
             }
             catch( Exception ex ) {
@@ -111,7 +111,7 @@ namespace RequestRepresentation
             return true;
         }
 
-        private XmlElement processModel(XmlDocument doc, EngineObject node)
+        private static XmlElement processModel(XmlDocument doc, EngineObject node)
         {
             XmlElement element = doc.CreateElement(string.Empty, node.NodeName, string.Empty);
             foreach (var param in node.Parameters)
@@ -173,17 +173,18 @@ namespace RequestRepresentation
             return element;
         }
 
-        private void buildTree(XmlDocument xmlDoc)
+        public static EngineObject buildTree(XmlDocument xmlDoc)
         {
-            _engineObjectTree.Name = xmlDoc.LastChild.Name;
-            _engineObjectTree.NodeName = xmlDoc.LastChild.Name;
-            _engineObjectTree.AddChildren(processChildren(xmlDoc.LastChild)); //we use the first child because the main node is the document header
-            _engineObjectTree.Parameters = processParameters(xmlDoc.LastChild);
-
+            EngineObject temp = new EngineObject();
+            temp.Name = xmlDoc.LastChild.Name;
+            temp.NodeName = xmlDoc.LastChild.Name;
+            temp.AddChildren(processChildren(xmlDoc.LastChild)); //we use the first child because the main node is the document header
+            temp.Parameters = processParameters(xmlDoc.LastChild);
+            return temp;
         }
 
         //checks if the _node has any non parameter children
-        private bool hasChildren(XmlNode _node)
+        private static bool hasChildren(XmlNode _node)
         {
             int count = 0;
             foreach (XmlNode child in _node.ChildNodes)
@@ -196,7 +197,7 @@ namespace RequestRepresentation
             return (count > 0);
         }
 
-        private ParamList processParameters(XmlNode _node)
+        private static ParamList processParameters(XmlNode _node)
         {
             ParamList temp =new ParamList();
             if (_node.ChildNodes.Count > 0)
@@ -215,7 +216,7 @@ namespace RequestRepresentation
             return temp;
         }
 
-        private string getName(XmlNode _node)
+        private static string getName(XmlNode _node)
         {            
             foreach (XmlNode child in _node.ChildNodes)
             {
@@ -243,18 +244,18 @@ namespace RequestRepresentation
             return _node.Name;
         }
 
-        private bool isParameter(XmlNode _node)
+        private static bool isParameter(XmlNode _node)
         {
             return (_node.ChildNodes.Count == 1 && _node.FirstChild.Name == "#text");
         }
 
-        private bool isComment(XmlNode _node)
+        private static bool isComment(XmlNode _node)
         {
             return (_node.Name == "#comment");
         }
 
 
-        private List<EngineObject> processChildren(XmlNode _node)
+        private static List<EngineObject> processChildren(XmlNode _node)
         {
             List<EngineObject> temp = new List<EngineObject>();
             if (!hasChildren(_node))
@@ -600,19 +601,14 @@ namespace RequestRepresentation
 
         private void AddProductOutput(string productName, string valueType, string taxWrapper, string timestepstart, string timestepend)
         {
-
             EngineObject QueryPart = newProductQuery("Query_" + taxWrapper + "_"+ productName + "_" + valueType, productName, taxWrapper,valueType);
             EngineObject OperatorPart = newOperator(taxWrapper+"_"+productName + "_" + valueType,
                 "Query_" + taxWrapper + "_" + productName + "_" + valueType, valueType, timestepstart, timestepend);
 
-
             var queries = FindObjectNodeName("Queries", EngineObjectTree);
             var operators = FindObjectNodeName("Operators", EngineObjectTree);
-
             queries.Children.Add(QueryPart);
-            operators.Children.Add(OperatorPart);
-
-      
+            operators.Children.Add(OperatorPart);      
         }
 
 
@@ -667,13 +663,20 @@ namespace RequestRepresentation
             return tempo;
         }
 
-        private void CalibrationsTemplate(string outputfilename)
+        public static void CalibrationsTemplate(string outputfilename, List<CalibData> calibrationData)
         {
 
+            List<EngineObject> calibObjects = new List<EngineObject>();
 
-            string EffectiveDate = EngineObjectTree.FindObject("Params").Parameters["EffectiveDate"].ToString();
-            var Models = FindObjectNodeName("Models", EngineObjectTree);
-
+            foreach (CalibData data in calibrationData)
+            {
+                XmlDocument _xmlDoc = new XmlDocument();
+                _xmlDoc.Load(data.CalibrationFile);
+                calibObjects.Add(buildTree(_xmlDoc));
+            }
+            
+            DateTime EffectiveDate = DateTime.Parse(calibObjects[0].FindObject("Params").Parameters["EffectiveDate"].ToString());
+            
             XmlDocument doc = new XmlDocument();
 
             //(1) the xml declaration is recommended, but not mandatory
@@ -681,14 +684,179 @@ namespace RequestRepresentation
             XmlElement root = doc.DocumentElement;
             doc.InsertBefore(xmlDeclaration, root);
 
-            
+            XmlElement xmlCalibrations = doc.CreateElement(string.Empty, "Calibrations", string.Empty);
+            doc.AppendChild(xmlCalibrations);
 
+            XmlElement xmlCalibrationTemplates = doc.CreateElement(string.Empty, "CalibrationTemplate", string.Empty);
+            xmlCalibrations.AppendChild(xmlCalibrationTemplates);
 
-            //doc.AppendChild(processModel(doc, rootnode));
+            XmlElement xmlEffectiveDate = doc.CreateElement(string.Empty, "EffectiveDate", string.Empty);
+            xmlCalibrationTemplates.AppendChild(xmlEffectiveDate);
+            xmlEffectiveDate.AppendChild(doc.CreateTextNode(EffectiveDate.ToString("O").Substring(0, EffectiveDate.ToString("O").Length-4)));
+
+            XmlElement xmlTemplateGroup = doc.CreateElement(string.Empty, "TemplateGroup", string.Empty);
+            xmlCalibrationTemplates.AppendChild(xmlTemplateGroup);
+            xmlTemplateGroup.AppendChild(doc.CreateTextNode("AMP"));
+
+            for (int i = 0; i < calibObjects.Count; i++)
+            {
+
+                var Models = FindObjectNodeName("Models", calibObjects[i]);
+
+                XmlElement xmleconomicmodels = doc.CreateElement(string.Empty, "economic_models", string.Empty);
+                xmlCalibrationTemplates.AppendChild(xmleconomicmodels);
+
+                XmlElement xmlassumptionSet = doc.CreateElement(string.Empty, "assumption_set", string.Empty);
+                xmleconomicmodels.AppendChild(xmlassumptionSet);
+                xmlassumptionSet.AppendChild(doc.CreateTextNode(calibrationData[i].AssumptionSet));
+
+                XmlElement xmlEffectiveDate2 = doc.CreateElement(string.Empty, "effective_date", string.Empty);
+                xmleconomicmodels.AppendChild(xmlEffectiveDate2);
+                xmlEffectiveDate2.AppendChild(doc.CreateTextNode(EffectiveDate.ToString("dd/MM/yyyy")));
+
+                //This is where we cycle models.
+
+                foreach (var model in Models.Children)
+                {
+
+                    string type = model.Parameters["Type"]?.ToString();
+
+                    if (type == null)
+                    {
+                        type = model.Parameters["Class"].ToString();
+                    }
+
+                    if (type == "EQUITY" || type == "CHILDEQUITY" || type == "TWOFACTORHULLWHITE" ||
+                        type == "DETERMINISTICEQUITY" || type == "ORNSTEINUHLENBECK")
+                    {
+                        //we only add the main model as the link then add the dependencies
+                        XmlElement xmleconomicmodel = doc.CreateElement(string.Empty, "economic_model", string.Empty);
+                        xmleconomicmodels.AppendChild(xmleconomicmodel);
+
+                        string modelname = "";
+                        string calibrationname = "";
+                        if (type == "TWOFACTORHULLWHITE")
+                        {
+                            modelname = "AustralianYieldCurve";
+                            calibrationname = modelname.ToUpper() + "-2FHW";
+                        }
+                        else
+                        {
+                            modelname = model.Parameters["Name"].ToString().Replace(" ", string.Empty);
+                            calibrationname = modelname;
+                        }
+
+                        //Now are add the type of the model
+                        if (type == "DETERMINISTICEQUITY")
+                        {
+                            calibrationname = modelname + "-DETERMINISTIC";
+                        }
+
+                        if ((type == "TWOFACTORHULLWHITE") &&
+                            (Double.Parse(
+                                 model.FindObject("ModelParameters").Parameters["VolatilityShortRate"].ToString()) <
+                             0.000001)
+                            &&
+                            (Double.Parse(
+                                 model.FindObject("ModelParameters").Parameters["VolatilityAdditionalParam"].ToString()) <
+                             0.000001))
+                        {
+                            calibrationname = modelname + "-DETERMINISTIC";
+                        }
+
+                        if (type == "EQUITY")
+                        {
+                            //identify the type of the vol model
+                            string voltype =
+                                Models.FindObject(model.Parameters["VolatilityModelID"].ToString(), "ModelID")
+                                    .Parameters[
+                                        "Type"].ToString();
+
+                            calibrationname = modelname + "-" + voltype;
+                        }
+
+                        if (type == "ORNSTEINUHLENBECK")
+                        {
+                            calibrationname = modelname + "-" + type;
+                            if (Double.Parse(model.Parameters["Sigma"].ToString()) < 0.00001)
+                            {
+                                calibrationname = calibrationname + "-DETERMINISTIC";
+                            }
+                        }
+
+                        XmlElement xmlModelName = doc.CreateElement(string.Empty, "model_name", string.Empty);
+                        xmleconomicmodel.AppendChild(xmlModelName);
+                        xmlModelName.AppendChild(doc.CreateTextNode(modelname));
+
+                        XmlElement xmlCurrency = doc.CreateElement(string.Empty, "currency", string.Empty);
+                        xmleconomicmodel.AppendChild(xmlCurrency);
+                        xmlCurrency.AppendChild(doc.CreateTextNode(calibrationData[i].Currency));
+
+                        XmlElement xmlcurrentmeanreturn = doc.CreateElement(string.Empty, "current_mean_return",
+                            string.Empty);
+                        xmleconomicmodel.AppendChild(xmlcurrentmeanreturn);
+                        xmlcurrentmeanreturn.AppendChild(doc.CreateTextNode("0"));
+
+                        XmlElement xmltypes = doc.CreateElement(string.Empty, "types", string.Empty);
+                        xmleconomicmodel.AppendChild(xmltypes);
+
+                        XmlElement xmlcalibrationtype = doc.CreateElement(string.Empty, "calibration_type", string.Empty);
+                        xmltypes.AppendChild(xmlcalibrationtype);
+
+                        xmlcalibrationtype.AppendChild(doc.CreateTextNode(calibrationname));
+
+                        XmlElement xmlmodels = doc.CreateElement(string.Empty, "models", string.Empty);
+                        xmleconomicmodel.AppendChild(xmlmodels);
+
+                        //Add the model, it's volatility model and it's income model if they exists
+                        EngineObject volmodel = null;
+                        if (model.Parameters["VolatilityModelID"] != null &&
+                            model.Parameters["VolatilityModelID"].ToString() != "0")
+                        {
+                            volmodel = Models.FindObject(model.Parameters["VolatilityModelID"].ToString(), "ModelID");
+                        }
+
+                        EngineObject incomemodel = null;
+                        if (model.Parameters["IncomeModelID"] != null &&
+                            model.Parameters["IncomeModelID"].ToString() != "0")
+                        {
+                            incomemodel = Models.FindObject(model.Parameters["IncomeModelID"].ToString(), "ModelID");
+                        }
+
+                        xmlmodels.AppendChild(processModel(doc, model));
+                        if (volmodel != null)
+                        {
+                            xmlmodels.AppendChild(processModel(doc, volmodel));
+                        }
+                        if (incomemodel != null)
+                        {
+                            xmlmodels.AppendChild(processModel(doc, incomemodel));
+                        }
+
+                    }
+                }
+                //Now we add the correlations
+                EngineObject correlations = calibObjects[i].FindObject("Correlations");
+                XmlElement xmlCorrelations = doc.CreateElement(string.Empty, "Correlations", string.Empty);
+                xmlCalibrationTemplates.AppendChild(xmlCorrelations);
+
+                XmlElement xmlAssumptionsSet2 = doc.CreateElement(string.Empty, "assumption_set", string.Empty);
+                xmlCorrelations.AppendChild(xmlAssumptionsSet2);
+
+                xmlAssumptionsSet2.AppendChild(doc.CreateTextNode(calibrationData[i].AssumptionSet));
+
+                XmlElement xmlEffectivedate3 = doc.CreateElement(string.Empty, "effective_date", string.Empty);
+                xmlCorrelations.AppendChild(xmlEffectivedate3);
+
+                xmlEffectivedate3.AppendChild(doc.CreateTextNode(EffectiveDate.ToString("dd/MM/yyyy")));
+
+                foreach (EngineObject child in correlations.Children)
+                {
+                    xmlCorrelations.AppendChild(processModel(doc, child));
+                }
+            }
 
             doc.Save(outputfilename);
-
-
         }
 
         //

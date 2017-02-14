@@ -57,6 +57,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BaseFileOps.cs" />
+    <Compile Include="CalibrationTemplate.xaml.cs">
+      <DependentUpon>CalibrationTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConfigLoader.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="FileOpsImplementation.cs" />
@@ -70,6 +73,10 @@
     <Compile Include="TextSearch\ViewModel\TreeViewModel.cs" />
     <Compile Include="TextSearch\ViewModel\EngineObjectViewModel.cs" />
     <Compile Include="xdmToRequestDescriptor.cs" />
+    <Page Include="CalibrationTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

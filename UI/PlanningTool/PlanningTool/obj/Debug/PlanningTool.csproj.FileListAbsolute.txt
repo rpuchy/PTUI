@@ -47,3 +47,6 @@ C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.Properties.Resou
 C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csproj.GenerateResource.Cache
 C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.exe
 C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.pdb
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\PlanningTool.csprojResolveAssemblyReference.cache
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\CalibrationTemplate.g.cs
+C:\Git\PTUI\UI\PlanningTool\PlanningTool\obj\Debug\CalibrationTemplate.baml
