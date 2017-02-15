@@ -23,16 +23,15 @@ namespace RequestRepresentation
     {   //
         private EngineObject _engineObjectTree = new EngineObject();
         private Dictionary<string, string[]> OutputTypeMap = new Dictionary<string, string[]>();
-        private string _filename;
-
+     
         public XmlDocument xmlDoc;
         
         
         public FileOpsImplementation(string filename)
         {
-            _filename = filename;
+            FileName = filename;
             BuildValuetypeDictionary();
-            LoadFile(_filename);            
+            LoadFile(FileName);            
         }        
 
 
@@ -92,12 +91,12 @@ namespace RequestRepresentation
 
         public bool Save()
         {
-            return SaveAs(_filename);
+            return SaveAs(FileName);
         }
 
         public bool SaveAs(string path)
         {
-            _filename = path; //update the file that we point to.
+            FileName = path; //update the file that we point to.
             XmlDocument _xmldoc = new XmlDocument();
 
             //(1) the xml declaration is recommended, but not mandatory
@@ -140,7 +139,7 @@ namespace RequestRepresentation
         }
         
 
-        public bool Save(string path, EngineObjectViewModel rootnode)
+        public static bool Save(string path, EngineObjectViewModel rootnode)
         {
             XmlDocument doc = new XmlDocument();
 
@@ -156,7 +155,7 @@ namespace RequestRepresentation
 
         }
 
-        private XmlElement processModel(XmlDocument doc, EngineObjectViewModel node)
+        private static XmlElement processModel(XmlDocument doc, EngineObjectViewModel node)
         {
             XmlElement element = doc.CreateElement(string.Empty, node.NodeName, string.Empty);
             foreach (var param in node.Parameters)

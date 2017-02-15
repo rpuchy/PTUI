@@ -35,7 +35,8 @@
     </Window.Resources>
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Menu DockPanel.Dock="Top">
+            <StackPanel DockPanel.Dock="Top">
+                <Menu >
                 <MenuItem Header="_File" DataContext="this">
                     <MenuItem Header="_New" Click="MenuItem_Click"  />
                     <MenuItem Header="_Open" Click="MenuItem_Click_2" />
@@ -44,14 +45,18 @@
                     <Separator />
                     <MenuItem Header="_Exit" Click="MenuItem_Click_1"  />
                 </MenuItem>
-                <MenuItem Header="_Edit">
-                    <MenuItem Header="_Add all outputs" Click="MenuItem_Click_5" />
-                    <MenuItem Header="_Remove all outputs" Click="MenuItem_Click_6"  />
-                    <MenuItem Header="_Create calibration Template" Click="MenuItem_OnClick_7" />
-                </MenuItem>
+                    <MenuItem Header="_Edit">
+                        <MenuItem Header="_Add all outputs" Click="MenuItem_Click_5" />
+                        <MenuItem Header="_Remove all outputs" Click="MenuItem_Click_6"  />
+                        <MenuItem Header="_Create calibration Template" Click="MenuItem_OnClick_7" />
+                    </MenuItem>
+                </Menu>
+                <ToolBar>
+                    <Button  Content="Run"  ToolTip="Run the simulation" Click="RunButton"/>
+                </ToolBar>
 
 
-            </Menu>
+            </StackPanel>
             <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                 <TextBlock DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left">Address :</TextBlock>
                 <Button DockPanel.Dock="Right"  HorizontalAlignment="Right" HorizontalContentAlignment="Right">Go to ></Button>

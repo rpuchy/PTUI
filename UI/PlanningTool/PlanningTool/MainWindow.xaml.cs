@@ -16,6 +16,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data;
+using System.Diagnostics;
 using BusinessLib;
 using Microsoft.Win32;
 using RequestRepresentation;
@@ -217,6 +218,40 @@ namespace PlanningTool
         {
 
             new CalibrationTemplate().Show();
+        }
+
+        private void RunButton(object sender, RoutedEventArgs e)
+        {
+            Runsimulation();
+        }
+
+        private void Runsimulation()
+        {
+            // Prepare the process to run
+            string UnitTestHarness = "C:\\Git\\illustration-tool-test\\binaries64\\UnitTestHarness.exe";
+
+            string tempRequest = System.IO.Path.GetTempPath() + "temp.xml";
+            string tempout = System.IO.Path.GetDirectoryName(fOps.FileName) + "\\Results.csv";
+
+            FileOpsImplementation.Save(tempRequest, VisualData.FirstGeneration[0]);
+
+            ProcessStartInfo start = new ProcessStartInfo();
+            // Enter in the command line arguments, everything you would enter after the executable name itself
+            start.Arguments = @"--forceoutput --testdata """ + tempRequest + @" "" --compdata c:\res.csv --csvresdata """ + tempout + @"""";
+            // Enter the executable to run, including the complete path
+            start.FileName = UnitTestHarness;
+            // Do you want to show a console window?
+            start.WindowStyle = ProcessWindowStyle.Normal;
+            start.CreateNoWindow = true;
+            int exitCode;
+            // Run the external process & wait for it to finish
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                exitCode = proc.ExitCode;
+            }
         }
     }
 
