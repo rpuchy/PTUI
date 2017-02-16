@@ -282,7 +282,7 @@ namespace RequestRepresentation
         }
 
         //returns the ouput component
-        public void AddAlloutputs(int timestepstart, int timestepend)
+        public void AddAlloutputs(int timestepstart, int timestepend, string logLocation)
         {
             //We follow the following process
             //1. we cycle through the ESG models and pick out all the models 
@@ -292,7 +292,7 @@ namespace RequestRepresentation
 
             //Add the transactions log, with scenario 1
 
-            AddtransactionLog("c:\\Foresight\\results\\transactionlog.csv",new int[] {1});
+            AddtransactionLog(logLocation, new int[] {1});
 
             var Params = FindObjectNodeName("Params", EngineObjectTree);
 

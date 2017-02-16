@@ -21,6 +21,7 @@ using BusinessLib;
 using Microsoft.Win32;
 using RequestRepresentation;
 using TreeViewWithViewModelDemo.TextSearch;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PlanningTool
 {
@@ -180,7 +181,7 @@ namespace PlanningTool
                 dlg.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
 
                 // Show save file dialog box
-                Nullable<bool> result = dlg.ShowDialog();
+                bool? result = dlg.ShowDialog();
 
                 // Process save file dialog box results
                 if (result == true)
@@ -198,9 +199,45 @@ namespace PlanningTool
         {
             if (fOps != null)
             {
-                fOps.AddAlloutputs(0, 100);                
+                string loglocation = System.IO.Path.GetDirectoryName(fOps.FileName) + "\\Transactionlog.csv";
+                fOps.AddAlloutputs( 0, 100, loglocation);
+                //Now produce rebalance rule table
+
+                Excel.Application xlApp = new Excel.Application();
+
+                Excel.Workbook xlNewWorkbook = xlApp.Workbooks.Add(Type.Missing);
+                xlApp.DisplayAlerts = false;
+                
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open("C:\\Git\\PTUI\\UI\\PlanningTool\\PlanningTool\\RequestAnalyser.xlsm");
+                Excel.Worksheet xlWorksheet = xlWorkbook.Worksheets.get_Item("Control");
+
+                Excel.Range rng = xlWorksheet.get_Range("B1");
+                rng.Value = fOps.FileName;
+
+                xlApp.Run("ShowRebalanceRulesByTimestepPriority");
+
+                xlWorksheet = xlWorkbook.Worksheets.get_Item("RebalanceRules");
+                xlWorksheet.Select();
+                Excel.Range srcrange = xlWorksheet.UsedRange;
+                srcrange.Copy(Type.Missing);
+
+                
+
+                Excel.Worksheet xlNewworksheet = (Excel.Worksheet)xlNewWorkbook.Worksheets.get_Item(1);
+
+                Excel.Range dstrng = xlNewworksheet.get_Range("A1");
+
+                dstrng.PasteSpecial(Excel.XlPasteType.xlPasteAll, Excel.XlPasteSpecialOperation.xlPasteSpecialOperationNone, Type.Missing, Type.Missing);
+
+                xlNewWorkbook.SaveAs(System.IO.Path.GetDirectoryName(fOps.FileName) + "\\Rebalance Rule Priority.xlsx");
+
+                xlWorkbook.Close();
+                xlNewWorkbook.Close();
+                xlApp.Quit();
+
                 VisualData = new TreeViewModel(fOps.EngineObjectTree);
                 TreeviewControl.SetData(VisualData);
+                
             }
         }
 
