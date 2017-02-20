@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Data;
 using System.Diagnostics;
 using BusinessLib;
@@ -207,8 +197,11 @@ namespace PlanningTool
 
                 Excel.Workbook xlNewWorkbook = xlApp.Workbooks.Add(Type.Missing);
                 xlApp.DisplayAlerts = false;
-                
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open("C:\\Git\\PTUI\\UI\\PlanningTool\\PlanningTool\\RequestAnalyser.xlsm");
+
+
+                string requestanalyser = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\RequestAnalyser.xlsm";
+
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(requestanalyser);
                 Excel.Worksheet xlWorksheet = xlWorkbook.Worksheets.get_Item("Control");
 
                 Excel.Range rng = xlWorksheet.get_Range("B1");
@@ -265,7 +258,9 @@ namespace PlanningTool
         private void Runsimulation()
         {
             // Prepare the process to run
-            string UnitTestHarness = "C:\\Git\\illustration-tool-test\\binaries64\\UnitTestHarness.exe";
+
+
+            string UnitTestHarness = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @".\UnitTestHarness.exe";
 
             string tempRequest = System.IO.Path.GetTempPath() + "temp.xml";
             string tempout = System.IO.Path.GetDirectoryName(fOps.FileName) + "\\Results.csv";

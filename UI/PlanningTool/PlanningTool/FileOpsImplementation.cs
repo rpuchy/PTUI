@@ -15,7 +15,7 @@ using PlanningTool;
 using TreeViewWithViewModelDemo.TextSearch;
 using System.Linq;
 using System.Xml.Linq;
-
+using System.Diagnostics;
 
 namespace RequestRepresentation
 {
@@ -281,6 +281,155 @@ namespace RequestRepresentation
             return temp;
         }
 
+
+        private void ChangeScenarioFileLocation(string inCalibrationFile, string outCalibrationFile, string newLocation, string prefix = "")
+        {
+            //first we need to change the output location of the scenario files
+            XmlDocument CalibXml = new XmlDocument();
+            CalibXml.Load(inCalibrationFile);
+            string xPathQuery = "//ScenarioFiles//FileName";
+            XmlNodeList temp = CalibXml.SelectNodes(xPathQuery);
+            foreach (XmlNode _node in temp)
+            {
+                _node.InnerText = newLocation + prefix + Path.GetFileName(_node.InnerText);
+            }
+
+            CalibXml.Save(outCalibrationFile);
+
+
+
+        }
+
+
+        private Dictionary<string, double> CreateScenarioFiles(string simfile)
+        {
+            //this method will take in a sim file
+            //Add scenario file outputs then process the outputs
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(simfile);
+            //set all equity models to total return
+            string  xPathQuery = "//Model[Type=\"EQUITY\"]//use_nominal_rates";
+            XmlNodeList temp = doc.SelectNodes(xPathQuery);
+
+            foreach (XmlNode node in temp)
+            {
+                node.InnerText = "false";
+            }
+
+            doc.SelectSingleNode("//Scenarios").InnerText = "30000";
+
+            doc.SelectSingleNode("//time_steps").InnerText = "30";
+
+
+            //Get all model ID's
+            xPathQuery = "//Model[Type=\"EQUITY\"]//ModelID";
+             temp = doc.SelectNodes(xPathQuery);
+
+            XmlNode ScenarioFiles = doc.SelectSingleNode("//ScenarioFiles");
+            ScenarioFiles.InnerText = "";
+
+            string outputlocation = System.IO.Path.GetTempPath() ;
+
+            //now add the scenario files
+            foreach (XmlNode node in temp)
+            {
+                XmlElement ScenarioFile = doc.CreateElement(string.Empty, "ScenarioFile", string.Empty);
+
+                XmlElement ModelId = doc.CreateElement(string.Empty, "ModelId", string.Empty);
+                ModelId.AppendChild(doc.CreateTextNode(node.InnerText));
+                ScenarioFile.AppendChild(ModelId);
+
+                XmlElement Filename = doc.CreateElement(string.Empty, "FileName", string.Empty);
+                Filename.AppendChild(doc.CreateTextNode(outputlocation+"Scenario_"+ node.InnerText+".csv"));
+                ScenarioFile.AppendChild(Filename);
+
+                XmlElement Valuetypes = doc.CreateElement(string.Empty, "ValueTypes", string.Empty);
+
+                XmlElement valueType = doc.CreateElement(string.Empty, "ValueType", string.Empty);
+                valueType.AppendChild(doc.CreateTextNode("ROLLUP"));
+                Valuetypes.AppendChild(valueType);
+
+                ScenarioFile.AppendChild(Valuetypes);
+                ScenarioFiles.AppendChild(ScenarioFile);
+            }
+
+
+            string outpath = System.IO.Path.GetTempPath() + "\\scendata.xml";
+
+            doc.Save(outpath);
+
+            string UnitTestHarness = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\UnitTestHarness.exe";
+
+
+            ProcessStartInfo start = new ProcessStartInfo();
+            // Enter in the command line arguments, everything you would enter after the executable name itself
+            start.Arguments = @"--forceoutput --testdata """ + outpath + @" "" --compdata c:\res.csv --csvresdata """ + outputlocation + @"\result.csv""";
+            
+            // Enter the executable to run, including the complete path
+            start.FileName = UnitTestHarness;
+            // Do you want to show a console window?
+            start.WindowStyle = ProcessWindowStyle.Normal;
+            start.CreateNoWindow = true;
+            int exitCode;
+            // Run the external process & wait for it to finish
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                exitCode = proc.ExitCode;
+            }
+
+            Dictionary<string, double> tempres = new Dictionary<string, double>();
+
+            foreach (XmlNode node in temp)
+            {
+                tempres.Add(node.InnerText, CalcMedian(outputlocation + "Scenario_" + node.InnerText + ".csv",30));
+            }
+
+            return tempres;
+            
+        }
+
+
+        private double CalcMedian(string filename, int timestep)
+        {
+            List<double> ScenarioData = new List<double>();
+            Double[,] Result = new Double[2, 50];
+            using (var fs = File.OpenRead(filename))
+            using (var reader = new StreamReader(fs))
+            {
+                //skip the first line
+                var header = reader.ReadLine().Split(',');
+                //Figure out the index to use
+                int headertouse = 0;
+                for (int j = 0; j < header.Length; j++)
+                {
+                    if (header[j] == "ROLLUP")
+                    {
+                        headertouse = j;
+                    }
+
+                }
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    if (int.Parse(values[1]) == timestep)
+                    {
+                        var val = Math.Log(double.Parse(values[headertouse]))/timestep;
+                        ScenarioData.Add(val);
+                    }
+                }
+                //now process the data.
+                ScenarioData.Sort();
+            }
+            return ScenarioData[(int)ScenarioData.Count / 2];
+        }
+
+
+        
         //returns the ouput component
         public void AddAlloutputs(int timestepstart, int timestepend, string logLocation)
         {
@@ -291,6 +440,15 @@ namespace RequestRepresentation
             Removealloutputs();
 
             //Add the transactions log, with scenario 1
+
+            // need to produce scenario files so we can produce the annualised excess return values for the various models
+
+            string outpath = System.IO.Path.GetTempPath() + "\\temp.xml";
+
+            SaveAs(outpath);
+
+            Dictionary<string,double> medians = CreateScenarioFiles(outpath);
+
 
             AddtransactionLog(logLocation, new int[] {1});
 
@@ -303,8 +461,8 @@ namespace RequestRepresentation
             Params.Parameters["output_file"] = "c:\\Foresight\\results\\results.csv"; 
 
             //convert ESG to deterministic
-            ConvertToDeterministic();
-            
+            ConvertToDeterministic(medians);
+
             var productlist = GetProducts(EngineObjectTree, "");
             var modeList = GetModels(EngineObjectTree);
             foreach (var prod in productlist)
@@ -323,6 +481,94 @@ namespace RequestRepresentation
                     AddModelOutput(model.ID ,model.Name, vtype, timestepstart.ToString(), timestepend.ToString());
                 }
             }
+        }
+
+
+
+        private void ConvertToDeterministic(Dictionary<string,double> values)
+        {
+            var hw = EngineObjectTree.FindObject("AUYieldCurve", "Name").FindObject("ModelParameters");
+            hw.Parameters["VolatilityShortRate"] = "0.000000000001";
+            hw.Parameters["VolatilityAdditionalParam"] = "0.000000000001";
+
+
+            var cpi = EngineObjectTree.FindObject("CPI", "Name");
+            cpi.Parameters["sigma"] = "0.0000000000001";
+            //TODO: we should set the mpr to mpr*sigmaold/sigmanew
+            var awe = EngineObjectTree.FindObject("AWE", "Name");
+            awe.Parameters["sigma"] = "0.0000000000001";
+
+            //Create one const vol model and set all other assumptions to correct mean return in model.
+            //Find all models of type equity
+            var modeList = EngineObjectTree.FindObjects("Model");
+            var Models = EngineObjectTree.FindObject("Models");
+            List<EngineObject> replacementEngineObjects = new List<EngineObject>();
+            foreach (EngineObject model in modeList)
+            {
+
+                if (model.Parameters["Type"]?.ToString() == "EQUITY")
+                {
+                    var volID = model.Parameters["volatility_model_id"];
+                    var volModel = Models.FindObject(volID.ToString(), "ModelID");
+                    double expectedReturn = 0.0;
+                    if (volModel.Parameters["Type"].ToString() == "REGIMESWITCHVOLATILITY")
+                    {
+                        var p12 = Double.Parse(volModel.Parameters["ProbabilityState1State2"].ToString());
+                        var p21 = Double.Parse(volModel.Parameters["ProbabilityState2State1"].ToString());
+                        var mu1 = Double.Parse(volModel.Parameters["MeanReturnState1"].ToString());
+                        var mu2 = Double.Parse(volModel.Parameters["MeanReturnState2"].ToString());
+                        var sigma1 = Double.Parse(volModel.Parameters["VolatilityState1"].ToString());
+                        var sigma2 = Double.Parse(volModel.Parameters["VolatilityState2"].ToString());
+
+                        var prob2 = (p12) / (p12 + p21);
+                        var prob1 = 1 - prob2;
+
+                        expectedReturn = prob1 * (mu1 - 0.5 * sigma1 * sigma1) + prob2 * (mu2 - 0.5 * sigma2 * sigma2);
+                    }
+                    else
+                    {
+                        expectedReturn = Double.Parse(volModel.Parameters["mean_return"].ToString()) - 0.5 * Math.Pow(Double.Parse(volModel.Parameters["volatility"].ToString()), 2);
+                    }
+                    expectedReturn = Math.Round(values[ model.Parameters["ModelID"].ToString()], 8);
+                    var tempmodel = new EngineObject()
+                    {
+                        Name = model.Name,
+                        NodeName = model.NodeName
+                    };
+                    tempmodel.Parameters.Add(new Parameter() { Name = "Type", Value = "DETERMINISTICEQUITY" });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "ModelID", Value = model.Parameters["ModelID"] });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "Name", Value = model.Parameters["Name"] });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "UseNominalRates", Value = model.Parameters["UseNominalRates"] });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "NominalRatesModelID", Value = model.Parameters["NominalRatesModelID"] });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "MeanReturn", Value = expectedReturn.ToString() });
+                    tempmodel.Parameters.Add(new Parameter() { Name = "IncomeModelID", Value = "0" });
+                    replacementEngineObjects.Add(tempmodel);
+                }
+            }
+
+            List<EngineObject> removeList = new List<EngineObject>();
+
+            foreach (EngineObject child in Models.Children)
+            {
+                var mtype = child.Parameters["Type"]?.ToString();
+                if (mtype == "EQUITY" || mtype == "REGIMESWITCHVOLATILITY" || mtype == "CONSTANTVOLATILITY")
+                {
+                    removeList.Add(child);
+                }
+            }
+
+            foreach (var engineObject in removeList)
+            {
+                Models.Children.Remove(engineObject);
+            }
+
+            foreach (EngineObject replacementEngineObject in replacementEngineObjects)
+            {
+                Models.Children.Add(replacementEngineObject);
+            }
+
+            var Corr = EngineObjectTree.FindObject("Correlations");
+            Corr.Children.Clear();
         }
 
 
