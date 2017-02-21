@@ -309,7 +309,7 @@ namespace RequestRepresentation
             XmlDocument doc = new XmlDocument();
             doc.Load(simfile);
             //set all equity models to total return
-            string  xPathQuery = "//Model[Type=\"EQUITY\"]//use_nominal_rates";
+            string  xPathQuery = "//Model[Type=\"EQUITY\"]//use_nominal_rates|//Model[Type=\"EQUITY\"]//UseNominalRates";
             XmlNodeList temp = doc.SelectNodes(xPathQuery);
 
             foreach (XmlNode node in temp)
@@ -319,14 +319,21 @@ namespace RequestRepresentation
 
             doc.SelectSingleNode("//Scenarios").InnerText = "30000";
 
-            doc.SelectSingleNode("//time_steps").InnerText = "30";
+            doc.SelectSingleNode("//time_steps|//TimeSteps").InnerText = "30";
 
 
             //Get all model ID's
-            xPathQuery = "//Model[Type=\"EQUITY\"]//ModelID";
+            xPathQuery = "//Model[Type=\"EQUITY\"]//ModelID|//Model[Type=\"EQUITY\"]//model_id";
              temp = doc.SelectNodes(xPathQuery);
 
             XmlNode ScenarioFiles = doc.SelectSingleNode("//ScenarioFiles");
+
+            if (ScenarioFiles == null)
+            {
+                ScenarioFiles = doc.CreateElement(string.Empty, "ScenarioFiles", string.Empty);
+                doc.SelectSingleNode("//OutputRequirements").AppendChild(ScenarioFiles);
+            }
+
             ScenarioFiles.InnerText = "";
 
             string outputlocation = System.IO.Path.GetTempPath() ;
@@ -445,7 +452,11 @@ namespace RequestRepresentation
 
             string outpath = System.IO.Path.GetTempPath() + "\\temp.xml";
 
+            string oldfile = FileName;
+
             SaveAs(outpath);
+
+            FileName = oldfile;
 
             Dictionary<string,double> medians = CreateScenarioFiles(outpath);
 
