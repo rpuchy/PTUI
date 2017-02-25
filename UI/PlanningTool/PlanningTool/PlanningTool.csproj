@@ -158,7 +158,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)Valuetypes.csv " "$(TargetDir)Valuetypes.csv"
+    <PostBuildEvent>copy /Y "$(ProjectDir)ModelOrder.csv " "$(TargetDir)ModelOrder.csv"
+copy /Y "$(ProjectDir)Valuetypes.csv " "$(TargetDir)Valuetypes.csv"
 copy /Y "$(ProjectDir)DiffMatchPatch.dll " "$(TargetDir)DiffMatchPatch.dll"
 copy /Y "$(ProjectDir)DiffMatchPatchWrapper.dll " "$(TargetDir)DiffMatchPatchWrapper.dll"
 copy /Y "$(ProjectDir)UnitTestHarness.exe " "$(TargetDir)UnitTestHarness.exe"

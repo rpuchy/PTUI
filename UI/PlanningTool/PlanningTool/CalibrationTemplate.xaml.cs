@@ -37,6 +37,11 @@ namespace PlanningTool
 
             _AvailableAssumptionSets.Add("MillimanAustraliaDefault");
             _AvailableAssumptionSets.Add("MillimanAustraliaDeterministic");
+
+            _CalibFileCollection.Add(new CalibData() {AssumptionSet = "MillimanAustraliaDefault", Currency = "AUD"});
+            _CalibFileCollection.Add(new CalibData() { AssumptionSet = "MillimanAustraliaDeterministic", Currency = "AUD"});
+
+
         }
 
         private void AddRowButtonBase_OnClick_(object sender, RoutedEventArgs e)

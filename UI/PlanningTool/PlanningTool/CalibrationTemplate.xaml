@@ -81,12 +81,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid HorizontalAlignment="Stretch">
-                                    <TextBlock Text="{Binding Path=AssumptionSet}" 
-                             Style="{StaticResource GridBlockStyle}"/>
+                                    <TextBlock Text="{Binding Path=AssumptionSet}" />
+                             <!--Style="{StaticResource GridBlockStyle}"/>
                                     <ComboBox SelectedItem="{Binding Path=AssumptionSet}"
                             ItemsSource="{Binding ElementName=This, 
                                           Path=AvailableAssumptionSets}" 
-                            Style="{StaticResource GridEditStyle}" />
+                            Style="{StaticResource GridEditStyle}" />-->
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -96,8 +96,6 @@
             </ListView.View>
         </ListView>
         <StackPanel>
-            <Button HorizontalAlignment="Right" Margin="5" 
-                Content="Add Row" Click="AddRowButtonBase_OnClick_" />
             <Button HorizontalAlignment="Right" Margin="5" 
                 Content="CreateTemplate"  Click="CreateTemplate" />
         </StackPanel>

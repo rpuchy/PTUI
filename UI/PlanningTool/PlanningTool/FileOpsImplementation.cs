@@ -16,6 +16,8 @@ using TreeViewWithViewModelDemo.TextSearch;
 using System.Linq;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using IModelColumnName = Microsoft.Office.Interop.Excel.IModelColumnName;
 
 namespace RequestRepresentation
 {
@@ -110,12 +112,39 @@ namespace RequestRepresentation
             return true;
         }
 
+        private static string FormatName(string oldName)
+        {
+            //TODO: setup an exclusion list.
+
+            if (oldName.Any(c => char.IsUpper(c)))
+            {
+                //nothing to be done here
+                return oldName;                
+            }
+            else
+            {
+                switch (oldName)
+                {
+                    case "code": return oldName;
+                    case "probability_state1_state2": return "ProbabilityState1ToState2";
+                    case "probability_state2_state1": return "ProbabilityState2ToState1";
+                    case "sweep_cashflows": return "SweepCashFlows";
+                }
+                string alternate = Regex.Replace(oldName, "_id", "ID");
+                alternate = Regex.Replace(alternate, @"((_[a-z0-9]))", m => m.ToString().ToUpper().Trim('_'));
+                alternate = char.ToUpper(alternate[0]) + alternate.Substring(1);
+                return alternate;
+            }
+        }
+
+
+
         private static XmlElement processModel(XmlDocument doc, EngineObject node)
         {
             XmlElement element = doc.CreateElement(string.Empty, node.NodeName, string.Empty);
             foreach (var param in node.Parameters)
             {
-                var newparam = doc.CreateElement(string.Empty, param.Name, string.Empty);
+                var newparam = doc.CreateElement(string.Empty, FormatName(param.Name), string.Empty);
                 newparam.AppendChild(doc.CreateTextNode(param.Value.ToString()));
                 element.AppendChild(newparam);
             }
@@ -469,7 +498,7 @@ namespace RequestRepresentation
 
             Params.Parameters["InflationAdjusted"] = "false";
 
-            Params.Parameters["output_file"] = "c:\\Foresight\\results\\results.csv"; 
+            Params.Parameters["OutputFile"] = "c:\\Foresight\\results\\results.csv"; 
 
             //convert ESG to deterministic
             ConvertToDeterministic(medians);
@@ -504,10 +533,10 @@ namespace RequestRepresentation
 
 
             var cpi = EngineObjectTree.FindObject("CPI", "Name");
-            cpi.Parameters["sigma"] = "0.0000000000001";
+            cpi.Parameters["Sigma"] = "0.0000000000001";
             //TODO: we should set the mpr to mpr*sigmaold/sigmanew
             var awe = EngineObjectTree.FindObject("AWE", "Name");
-            awe.Parameters["sigma"] = "0.0000000000001";
+            awe.Parameters["Sigma"] = "0.0000000000001";
 
             //Create one const vol model and set all other assumptions to correct mean return in model.
             //Find all models of type equity
@@ -519,13 +548,13 @@ namespace RequestRepresentation
 
                 if (model.Parameters["Type"]?.ToString() == "EQUITY")
                 {
-                    var volID = model.Parameters["volatility_model_id"];
+                    var volID = model.Parameters["VolatilityModelID"];
                     var volModel = Models.FindObject(volID.ToString(), "ModelID");
                     double expectedReturn = 0.0;
                     if (volModel.Parameters["Type"].ToString() == "REGIMESWITCHVOLATILITY")
                     {
-                        var p12 = Double.Parse(volModel.Parameters["ProbabilityState1State2"].ToString());
-                        var p21 = Double.Parse(volModel.Parameters["ProbabilityState2State1"].ToString());
+                        var p12 = Double.Parse(volModel.Parameters["ProbabilityState1ToState2"].ToString());
+                        var p21 = Double.Parse(volModel.Parameters["ProbabilityState2ToState1"].ToString());
                         var mu1 = Double.Parse(volModel.Parameters["MeanReturnState1"].ToString());
                         var mu2 = Double.Parse(volModel.Parameters["MeanReturnState2"].ToString());
                         var sigma1 = Double.Parse(volModel.Parameters["VolatilityState1"].ToString());
@@ -538,7 +567,7 @@ namespace RequestRepresentation
                     }
                     else
                     {
-                        expectedReturn = Double.Parse(volModel.Parameters["mean_return"].ToString()) - 0.5 * Math.Pow(Double.Parse(volModel.Parameters["volatility"].ToString()), 2);
+                        expectedReturn = Double.Parse(volModel.Parameters["MeanReturn"].ToString()) - 0.5 * Math.Pow(Double.Parse(volModel.Parameters["Volatility"].ToString()), 2);
                     }
                     expectedReturn = Math.Round(values[ model.Parameters["ModelID"].ToString()], 8);
                     var tempmodel = new EngineObject()
@@ -922,6 +951,26 @@ namespace RequestRepresentation
         public static void CalibrationsTemplate(string outputfilename, List<CalibData> calibrationData)
         {
 
+            //Load file that dictates model order
+            Dictionary<string,int> ModelOrder = new Dictionary<string, int>();            
+            using (var fs = File.OpenRead(@".\ModelOrder.csv"))
+            using (var reader = new StreamReader(fs))
+            {
+                reader.ReadLine(); //read over header
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    //remove whitespace from items.
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        values[i] = values[i].Trim();
+                    }
+                    ModelOrder.Add(values[1], int.Parse(values[0]));
+                }
+            }
+            
+
             List<EngineObject> calibObjects = new List<EngineObject>();
 
             foreach (CalibData data in calibrationData)
@@ -954,6 +1003,8 @@ namespace RequestRepresentation
             xmlCalibrationTemplates.AppendChild(xmlTemplateGroup);
             xmlTemplateGroup.AppendChild(doc.CreateTextNode("AMP"));
 
+            
+
             for (int i = 0; i < calibObjects.Count; i++)
             {
 
@@ -972,6 +1023,8 @@ namespace RequestRepresentation
 
                 //This is where we cycle models.
 
+                Dictionary<int, XmlNode> modelXMLSnippet = new Dictionary<int, XmlNode>();
+
                 foreach (var model in Models.Children)
                 {
 
@@ -987,7 +1040,7 @@ namespace RequestRepresentation
                     {
                         //we only add the main model as the link then add the dependencies
                         XmlElement xmleconomicmodel = doc.CreateElement(string.Empty, "economic_model", string.Empty);
-                        xmleconomicmodels.AppendChild(xmleconomicmodel);
+                        //xmleconomicmodels.AppendChild(xmleconomicmodel);
 
                         string modelname = "";
                         string calibrationname = "";
@@ -1088,8 +1141,23 @@ namespace RequestRepresentation
                         {
                             xmlmodels.AppendChild(processModel(doc, incomemodel));
                         }
-
+                        int res;
+                        if (ModelOrder.TryGetValue(model.Parameters["Name"].ToString().Replace(" ", string.Empty),
+                            out res))
+                        {
+                            modelXMLSnippet.Add(res, xmleconomicmodel);
+                        }
+                        else
+                        {
+                            xmleconomicmodels.AppendChild(xmleconomicmodel);
+                            
+                        }
                     }
+ 
+                }
+                for (int j = 1; j <= modelXMLSnippet.Count; j++)
+                {
+                    xmleconomicmodels.AppendChild(modelXMLSnippet[j]);
                 }
                 //Now we add the correlations
                 EngineObject correlations = calibObjects[i].FindObject("Correlations");
